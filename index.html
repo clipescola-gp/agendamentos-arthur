@@ -172,7 +172,7 @@ function renderSuccess(){
     <div class="success-icon">🎉</div>
     <h2>Agendamento confirmado!</h2>
     <p class="sub"><strong>${esc(form.school)}</strong><br>${fmtDate(dt)} · ${fmtTime(dt)} – ${fmtTime(end)}<br>Um convite foi enviado para <strong>${esc(form.email)}</strong></p>
-    ${meetUrl?'<a href="'+meetUrl+'" target="_blank" class="meet-btn">🎥 Entrar na reunião</a><div class="meet-link-box"><strong>Link da reunião</strong>'+meetUrl+'</div>':''}
+    ${meetUrl?'<div class="meet-link-box"><strong>Link da reunião</strong><div style="display:flex;align-items:center;gap:8px;margin-top:4px"><span id="meeturl" style="flex:1;word-break:break-all;font-size:13px;color:#22367b">'+meetUrl+'</span><button onclick="navigator.clipboard.writeText(''+meetUrl+'').then(()=>{this.textContent='✓ Copiado!';setTimeout(()=>{this.textContent='Copiar'},2000)})" style="flex-shrink:0;padding:6px 14px;border-radius:6px;border:1.5px solid #d3e2f2;background:#fff;color:#22367b;font-weight:700;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif">Copiar</button></div></div>':''}
     <button class="new-btn" onclick="resetAll()">Fazer novo agendamento</button>
   </div>`;
 }
