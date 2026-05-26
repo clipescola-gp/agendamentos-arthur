@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ClipEscola · Agendar Treinamento — Arthur Montardo</title>
+<title>ClipEscola - Agendar Treinamento - Arthur Montardo</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -22,8 +22,7 @@ header{background:var(--blue);padding:0 32px;height:64px;display:flex;align-item
 .csm-role{color:rgba(255,255,255,.65);font-size:11px}
 .steps-bar{background:#fff;border-bottom:1px solid var(--light);padding:16px 32px;display:flex;align-items:center;justify-content:center}
 .step-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gray)}
-.step-item.active{color:var(--blue)}
-.step-item.done{color:#057a55}
+.step-item.active{color:var(--blue)}.step-item.done{color:#057a55}
 .step-num{width:26px;height:26px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
 .step-item.active .step-num{background:var(--blue);border-color:var(--blue);color:#fff}
 .step-item.done .step-num{background:#057a55;border-color:#057a55;color:#fff}
@@ -37,12 +36,8 @@ label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bott
 input{width:100%;padding:10px 13px;border-radius:8px;border:1.5px solid var(--light);background:var(--bg);color:var(--blue);font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border .2s}
 input:focus{border-color:var(--blue)}
 .btn{display:inline-block;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:'Nunito',sans-serif}
-.btn-primary{background:var(--blue);color:#fff}
-.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-primary{background:var(--blue);color:#fff}.btn-primary:disabled{opacity:.45;cursor:not-allowed}
 .btn-secondary{background:#fff;color:var(--blue);border:1.5px solid var(--light)}
-.slots-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
-.slot-btn{padding:10px 18px;border-radius:8px;border:1.5px solid var(--light);background:#fff;color:var(--blue);font-weight:700;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
-.slot-btn:hover{border-color:var(--blue);background:#e8edf8}
 .summary-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--light);font-size:14px}
 .summary-row:last-child{border-bottom:none}
 .summary-row span:first-child{color:var(--gray);font-weight:600}
@@ -52,7 +47,6 @@ input:focus{border-color:var(--blue)}
 .success-icon{width:64px;height:64px;border-radius:50%;background:#def7ec;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:28px}
 .success-card h2{font-size:22px;font-weight:800;margin-bottom:10px;color:#057a55}
 .success-card .sub{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:24px}
-.meet-btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;margin-bottom:12px;font-family:'Nunito',sans-serif}
 .meet-link-box{background:var(--bg);border:1.5px solid var(--light);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--gray);word-break:break-all;margin-bottom:20px;text-align:left}
 .meet-link-box strong{display:block;margin-bottom:4px;color:var(--blue);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
 .new-btn{background:none;border:1.5px solid var(--light);color:var(--gray);padding:10px 24px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;font-family:'Nunito',sans-serif}
@@ -66,115 +60,156 @@ footer{text-align:center;padding:32px;color:var(--gray);font-size:12px;border-to
   <div class="badge">Agendamento</div>
 </header>
 <div class="hero">
-  <div class="hero-tag">Reunião de Treinamento</div>
+  <div class="hero-tag">Reuniao de Treinamento</div>
   <h1>Agendar com Arthur Montardo</h1>
-  <p>Escolha o melhor horário para a reunião de treinamento do seu módulo financeiro.</p>
+  <p>Escolha o melhor horario para a reuniao de treinamento do seu modulo financeiro.</p>
   <div class="hero-csm">
     <div class="csm-av">AM</div>
-    <div>
-      <div class="csm-name">Arthur Montardo</div>
-      <div class="csm-role">Gerente de Produtos Financeiros</div>
-    </div>
+    <div><div class="csm-name">Arthur Montardo</div><div class="csm-role">Gerente de Produtos Financeiros</div></div>
   </div>
 </div>
 <div class="steps-bar" id="stepsBar"></div>
 <div class="main"><div id="content"></div></div>
-<footer>ClipEscola · Reunião conduzida por <strong>Arthur Montardo</strong> · Gerente de Produtos Financeiros</footer>
+<footer>ClipEscola - Reuniao conduzida por <strong>Arthur Montardo</strong> - Gerente de Produtos Financeiros</footer>
 <script>
-const CSM={"name":"Arthur Montardo","title":"Gerente de Produtos Financeiros","email":"arthurmontardo.clipescola@gmail.com","icsUrl":"https://calendar.google.com/calendar/ical/arthurmontardo.clipescola%40gmail.com/private-0b17c114bce7286b5a663c1680bfb490/basic.ics","active":true,"slots":[{"day":1,"time":"09:00"},{"day":1,"time":"14:30"},{"day":2,"time":"09:00"},{"day":2,"time":"14:30"},{"day":3,"time":"09:30"},{"day":3,"time":"14:30"},{"day":4,"time":"09:00"},{"day":4,"time":"14:30"},{"day":5,"time":"09:30"},{"day":5,"time":"14:00"}]};
-const CFG={"webhookVerificar":"https://n8n.clipescola.com.br/webhook/verificar-disponibilidade-gpf","webhookAgendar":"https://n8n.clipescola.com.br/webhook/agendar-gpf","calendarId":"clipescola@clipescola.sale","sheetId":"16OBANG9-vCMmCZpmQUcgcYR2m_EK9RD5TNV5Gm9_2ow","slaHours":48,"meetingTitle":"Reunião ClipEscola — Produtos Financeiros","meetingDuration":120};
-const SLOTS_CFG=[{"day":1,"time":"09:00"},{"day":1,"time":"14:30"},{"day":2,"time":"09:00"},{"day":2,"time":"14:30"},{"day":3,"time":"09:30"},{"day":3,"time":"14:30"},{"day":4,"time":"09:00"},{"day":4,"time":"14:30"},{"day":5,"time":"09:30"},{"day":5,"time":"14:00"}];
-let step=1,form={school:'',contact:'',email:'',phone:'',guests:''},chosen=null,meetUrl='',availSlots=[];
-const pad=n=>String(n).padStart(2,'0');
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function fmtDate(d){return d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
-function fmtTime(d){return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}
-function addMin(d,m){return new Date(d.getTime()+m*60000)}
-function genLocalSlots(){
-  const now=new Date(),sla=CFG.slaHours*3600000,res=[];
-  for(let i=0;i<28&&res.length<15;i++){
-    const dt=new Date(now);dt.setDate(dt.getDate()+i);
-    for(const s of SLOTS_CFG.filter(s=>s.day===dt.getDay())){
-      const[h,m]=s.time.split(':').map(Number);
-      const sd=new Date(dt);sd.setHours(h,m,0,0);
-      if(sd-now>=sla)res.push({datetime:sd.toISOString(),label:fmtDate(sd)+' às '+s.time});
+var CSM={"name":"Arthur Montardo","title":"Gerente de Produtos Financeiros","email":"arthurmontardo.clipescola@gmail.com","icsUrl":"https://calendar.google.com/calendar/ical/arthurmontardo.clipescola%40gmail.com/private-0b17c114bce7286b5a663c1680bfb490/basic.ics","active":true,"slots":[{"day":1,"time":"09:30"},{"day":1,"time":"14:30"},{"day":2,"time":"09:00"},{"day":2,"time":"14:30"},{"day":3,"time":"09:30"},{"day":3,"time":"14:30"},{"day":4,"time":"09:00"},{"day":4,"time":"14:30"},{"day":5,"time":"09:30"},{"day":5,"time":"14:00"}]};
+var CFG={"webhookVerificar":"https://n8n.clipescola.com.br/webhook/verificar-disponibilidade-gpf","webhookAgendar":"https://n8n.clipescola.com.br/webhook/agendar-gpf","calendarId":"clipescola@clipescola.sale","sheetId":"16OBANG9-vCMmCZpmQUcgcYR2m_EK9RD5TNV5Gm9_2ow","slaHours":48,"meetingTitle":"Reunião ClipEscola — Produtos Financeiros","meetingDuration":120};
+var SLOTS_CFG=[{"day":1,"time":"09:30"},{"day":1,"time":"14:30"},{"day":2,"time":"09:00"},{"day":2,"time":"14:30"},{"day":3,"time":"09:30"},{"day":3,"time":"14:30"},{"day":4,"time":"09:00"},{"day":4,"time":"14:30"},{"day":5,"time":"09:30"},{"day":5,"time":"14:00"}];
+var step=1,form={school:'',contact:'',email:'',phone:'',guests:''},chosen=null,meetUrl='',availSlots=[];
+function pad(n){return String(n).padStart(2,'0');}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function fmtDate(d){return d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});}
+function fmtTime(d){return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+function addMin(d,m){return new Date(d.getTime()+m*60000);}
+function buildCalendarHTML(slots){
+  var MONTHS=['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  var DAYS=['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
+  var byMonth={};
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i];var dt=new Date(s.datetime);
+    var mk=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');
+    if(!byMonth[mk])byMonth[mk]={year:dt.getFullYear(),month:dt.getMonth(),slots:[]};
+    byMonth[mk].slots.push({dt:dt,idx:i});
+  }
+  var html='';
+  var mkeys=Object.keys(byMonth).sort();
+  for(var mi=0;mi<mkeys.length;mi++){
+    var mk2=mkeys[mi];var g=byMonth[mk2];
+    var firstDay=new Date(g.year,g.month,1).getDay();
+    var daysInMonth=new Date(g.year,g.month+1,0).getDate();
+    var slotMap={};
+    for(var si=0;si<g.slots.length;si++){var ss=g.slots[si];var dd=ss.dt.getDate();if(!slotMap[dd])slotMap[dd]=[];slotMap[dd].push(ss);}
+    var headers='';
+    for(var di=0;di<DAYS.length;di++){headers+='<div style="text-align:center;font-size:11px;font-weight:700;color:#5a6074;padding:4px 0">'+DAYS[di]+'</div>';}
+    var grid='';
+    for(var ei=0;ei<firstDay;ei++)grid+='<div></div>';
+    for(var n=1;n<=daysInMonth;n++){
+      var ds=slotMap[n]||[];
+      if(!ds.length){
+        grid+='<div style="min-height:52px;border-radius:8px;background:#f5f7fb;display:flex;align-items:center;justify-content:center;font-size:13px;color:#c0c8d8;font-weight:600">'+n+'</div>';
+      }else{
+        var times='';
+        for(var ti=0;ti<ds.length;ti++){var ts2=ds[ti];times+='<button onclick="selectSlot('+ts2.idx+')" style="display:block;width:100%;padding:2px 0;border:none;background:none;cursor:pointer;font-size:11px;font-weight:700;color:#1a56db;font-family:Nunito,sans-serif;border-radius:4px">'+fmtTime(ts2.dt)+'</button>';}
+        grid+='<div style="min-height:52px;border-radius:8px;background:#e8f0fe;border:1.5px solid #c5d8f8;padding:4px 3px"><div style="text-align:center;font-size:12px;font-weight:800;color:#22367b;margin-bottom:2px">'+n+'</div>'+times+'</div>';
+      }
     }
+    html+='<div style="margin-bottom:28px"><div style="font-weight:800;font-size:15px;color:#22367b;margin-bottom:12px">'+MONTHS[g.month]+' '+g.year+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px">'+headers+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">'+grid+'</div></div>';
+  }
+  return html;
+}
+function renderSteps(){
+  var items=[['1','Dados'],['2','Horario'],['3','Confirmacao']];
+  var html='';
+  for(var i=0;i<items.length;i++){var n=items[i][0],l=items[i][1],s=i+1,cls=s<step?'done':s===step?'active':'';
+    html+=(i?'<div class="step-sep"></div>':'')
+      +'<div class="step-item '+cls+'"><div class="step-num">'+(s<step?'v':n)+'</div>'+l+'</div>';}
+  document.getElementById('stepsBar').innerHTML=html;
+}
+function renderStep1(){
+  document.getElementById('content').innerHTML='<div class="card"><h2>Dados da instituicao</h2><div class="form-row">'
+    +'<div class="form-group full"><label>Nome da instituicao</label><input id="fs" placeholder="Ex: Escola Municipal..." value="'+esc(form.school)+'"/></div>'
+    +'<div class="form-group"><label>Responsavel</label><input id="fc" placeholder="Nome completo" value="'+esc(form.contact)+'"/></div>'
+    +'<div class="form-group"><label>E-mail</label><input id="fe" type="email" placeholder="email@escola.com" value="'+esc(form.email)+'"/></div>'
+    +'<div class="form-group"><label>Telefone</label><input id="fp" placeholder="(48) 9 9999-9999" value="'+esc(form.phone)+'"/></div>'
+    +'<div class="form-group full"><label>Convidados adicionais</label><input id="fg" placeholder="email1@ex.com, email2@ex.com" value="'+esc(form.guests)+'"/></div>'
+    +'</div><div style="margin-top:20px"><button class="btn btn-primary" onclick="goStep2()">Ver horarios disponiveis</button></div></div>';
+}
+function gv(id){var el=document.getElementById(id);return el?el.value.trim():''}
+async function goStep2(){
+  form={school:gv('fs'),contact:gv('fc'),email:gv('fe'),phone:gv('fp'),guests:gv('fg')};
+  if(!form.school||!form.contact||!form.email||!form.phone){alert('Preencha todos os campos.');return;}
+  step=2;renderSteps();
+  document.getElementById('content').innerHTML='<div class="card"><h2>Escolha o horario</h2><p style="color:#5a6074;font-size:13px">Verificando disponibilidade...</p></div>';
+  try{
+    var r=await fetch(CFG.webhookVerificar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({csmEmail:CSM.email,csmIcsUrl:CSM.icsUrl,slots:SLOTS_CFG,slaHours:CFG.slaHours})});
+    var d=await r.json();availSlots=Array.isArray(d)?d:(d.slots||[]);
+    if(!availSlots.length) throw new Error('empty');
+  }catch(e){availSlots=genLocalSlots();}
+  renderStep2();
+}
+function genLocalSlots(){
+  var now=new Date(),sla=CFG.slaHours*3600000,res=[];
+  for(var d=0;d<28&&res.length<15;d++){
+    var dt=new Date(now);dt.setDate(dt.getDate()+d);
+    for(var i=0;i<SLOTS_CFG.length;i++){var s=SLOTS_CFG[i];if(s.day!==dt.getDay())continue;
+      var p=s.time.split(':');var h=parseInt(p[0]),m=parseInt(p[1]);
+      var sd=new Date(dt);sd.setHours(h,m,0,0);
+      if(sd-now>=sla)res.push({datetime:sd.toISOString(),label:fmtDate(sd)+' as '+s.time});}
   }
   return res;
 }
-function renderSteps(){
-  const items=[['1','Dados'],['2','Horário'],['3','Confirmação']];
-  document.getElementById('stepsBar').innerHTML=items.map(([n,l],i)=>{
-    const s=i+1,cls=s<step?'done':s===step?'active':'';
-    return(i?'<div class="step-sep"></div>':'')+'<div class="step-item '+cls+'"><div class="step-num">'+(s<step?'✓':n)+'</div>'+l+'</div>';
-  }).join('');
-}
-function renderStep1(){
-  document.getElementById('content').innerHTML=`<div class="card"><h2>📋 Dados da instituição</h2><div class="form-row">
-    <div class="form-group full"><label>Nome da instituição</label><input id="fs" placeholder="Ex: Escola Municipal..." value="${esc(form.school)}"/></div>
-    <div class="form-group"><label>Responsável</label><input id="fc" placeholder="Nome completo" value="${esc(form.contact)}"/></div>
-    <div class="form-group"><label>E-mail</label><input id="fe" type="email" placeholder="email@escola.com" value="${esc(form.email)}"/></div>
-    <div class="form-group"><label>Telefone</label><input id="fp" placeholder="(48) 9 9999-9999" value="${esc(form.phone)}"/></div>
-    <div class="form-group full"><label>Convidados adicionais <span style="font-weight:400;text-transform:none">(opcional — separe por vírgula)</span></label><input id="fg" placeholder="email1@ex.com, email2@ex.com" value="${esc(form.guests)}"/></div>
-  </div><div style="margin-top:20px"><button class="btn btn-primary" onclick="goStep2()">Ver horários disponíveis →</button></div></div>`;
-}
-async function goStep2(){
-  form={school:document.getElementById('fs')?.value.trim()||'',contact:document.getElementById('fc')?.value.trim()||'',email:document.getElementById('fe')?.value.trim()||'',phone:document.getElementById('fp')?.value.trim()||'',guests:document.getElementById('fg')?.value.trim()||''};
-  if(!form.school||!form.contact||!form.email||!form.phone){alert('Preencha todos os campos obrigatórios.');return;}
-  step=2;renderSteps();
-  document.getElementById('content').innerHTML='<div class="card"><h2>🕐 Escolha o horário</h2><p style="color:#5a6074;font-size:13px">⏳ Verificando disponibilidade...</p></div>';
-  try{
-    const r=await fetch(CFG.webhookVerificar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({csmEmail:CSM.email,csmIcsUrl:CSM.icsUrl,slots:SLOTS_CFG,slaHours:CFG.slaHours})});
-    const d=await r.json();
-    availSlots=Array.isArray(d)?d:(d.slots||[]);
-    if(!availSlots.length)availSlots=genLocalSlots();
-  }catch{availSlots=genLocalSlots();}
-  renderStep2();
-}
 function renderStep2(){
-  const html=availSlots.length
-    ?'<div class="slots-grid">'+availSlots.map((s,i)=>{const dt=new Date(s.datetime);return'<button class="slot-btn" onclick="selectSlot('+i+')">'+(s.label||fmtDate(dt)+' '+fmtTime(dt))+'</button>';}).join('')+'</div>'
-    :'<div class="alert">Nenhum horário disponível no momento. Entre em contato pelo e-mail.</div>';
-  document.getElementById('content').innerHTML='<div class="card"><h2>🕐 Escolha o horário</h2>'+html+'</div>';
+  if(!availSlots.length){document.getElementById('content').innerHTML='<div class="card"><h2>Escolha o horario</h2><div class="alert">Nenhum horario disponivel.</div></div>';return;}
+  document.getElementById('content').innerHTML='<div class="card"><h2>Escolha o horario</h2>'+buildCalendarHTML(availSlots)+'</div>';
 }
 function selectSlot(i){
   chosen=availSlots[i];step=3;renderSteps();
-  const dt=new Date(chosen.datetime),end=addMin(dt,CFG.meetingDuration);
-  document.getElementById('content').innerHTML=`<div class="card"><h2>✅ Confirmar agendamento</h2><div style="margin-bottom:20px">
-    ${[['Instituição',form.school],['Responsável',form.contact],['E-mail',form.email],['Telefone',form.phone],form.guests?['Convidados',form.guests]:null,['Data',fmtDate(dt)],['Horário',fmtTime(dt)+' – '+fmtTime(end)],['Duração',CFG.meetingDuration+' minutos']].filter(Boolean).map(([k,v])=>'<div class="summary-row"><span>'+k+'</span><span>'+esc(String(v))+'</span></div>').join('')}
-  </div><div id="err3"></div><div style="display:flex;gap:10px"><button class="btn btn-secondary" onclick="goBack()">← Voltar</button><button class="btn btn-primary" id="btnC" onclick="confirmar()">✅ Confirmar agendamento</button></div></div>`;
+  var dt=new Date(chosen.datetime),end=addMin(dt,CFG.meetingDuration);
+  var rows=[['Instituicao',form.school],['Responsavel',form.contact],['E-mail',form.email],['Telefone',form.phone]];
+  if(form.guests)rows.push(['Convidados',form.guests]);
+  rows.push(['Data',fmtDate(dt)],['Horario',fmtTime(dt)+' - '+fmtTime(end)],['Duracao',CFG.meetingDuration+' minutos']);
+  var rowsHtml='';
+  for(var ri=0;ri<rows.length;ri++){rowsHtml+='<div class="summary-row"><span>'+rows[ri][0]+'</span><span>'+esc(String(rows[ri][1]))+'</span></div>';}
+  document.getElementById('content').innerHTML='<div class="card"><h2>Confirmar agendamento</h2><div style="margin-bottom:20px">'+rowsHtml+'</div><div id="err3"></div><div style="display:flex;gap:10px"><button class="btn btn-secondary" onclick="goBack()">Voltar</button><button class="btn btn-primary" id="btnC" onclick="confirmar()">Confirmar agendamento</button></div></div>';
 }
 function goBack(){step=2;renderSteps();renderStep2();}
 async function confirmar(){
-  const btn=document.getElementById('btnC');btn.disabled=true;btn.textContent='⏳ Confirmando...';
+  var btn=document.getElementById('btnC');btn.disabled=true;btn.textContent='Confirmando...';
   try{
-    const att=[{email:form.email},{email:CSM.email}];
-    if(form.guests)form.guests.split(/[,;\n]/).map(e=>e.trim()).filter(Boolean).forEach(e=>att.push({email:e}));
-    const dt=new Date(chosen.datetime);
-    const payload={
-      school:form.school,contact:form.contact,email:form.email,phone:form.phone,guests:form.guests,
+    var att=[{email:form.email},{email:CSM.email}];
+    if(form.guests)form.guests.split(',').map(function(e){return e.trim();}).filter(Boolean).forEach(function(e){att.push({email:e});});
+    var dt=new Date(chosen.datetime);
+    var payload={school:form.school,contact:form.contact,email:form.email,phone:form.phone,guests:form.guests,
       date:dt.toISOString().slice(0,10),time:fmtTime(dt),
       csmEmail:CSM.email,csmName:CSM.name,calendarId:CFG.calendarId,
-      sheetId:CFG.sheetId,
-      sheetData:{Data:dt.toLocaleDateString('pt-BR'),Horario:fmtTime(dt),Escola:form.school,Responsavel:form.contact,Email:form.email,Telefone:form.phone,CSM:CSM.name}
-    };
-    const r=await fetch(CFG.webhookAgendar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const d=await r.json();meetUrl=d.meetLink||d.hangoutLink||d.htmlLink||'';renderSuccess();
+      sheetId:CFG.sheetId,durationMinutes:CFG.meetingDuration,
+      sheetData:{Data:dt.toLocaleDateString('pt-BR'),Horario:fmtTime(dt),Escola:form.school,Responsavel:form.contact,Email:form.email,Telefone:form.phone,CSM:CSM.name}};
+    var r=await fetch(CFG.webhookAgendar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var d=await r.json();meetUrl=d.meetLink||d.hangoutLink||d.htmlLink||'';
+    renderSuccess();
   }catch(e){
-    btn.disabled=false;btn.textContent='✅ Confirmar agendamento';
-    document.getElementById('err3').innerHTML='<div class="error-box">⚠️ Erro: '+esc(e.message)+'</div>';
+    btn.disabled=false;btn.textContent='Confirmar agendamento';
+    document.getElementById('err3').innerHTML='<div class="error-box">Erro: '+esc(e.message)+'</div>';
   }
 }
 function renderSuccess(){
-  const dt=new Date(chosen.datetime),end=addMin(dt,CFG.meetingDuration);
+  var dt=new Date(chosen.datetime),end=addMin(dt,CFG.meetingDuration);
   document.getElementById('stepsBar').style.display='none';
-  document.getElementById('content').innerHTML=`<div class="success-card card">
-    <div class="success-icon">🎉</div>
-    <h2>Agendamento confirmado!</h2>
-    <p class="sub"><strong>${esc(form.school)}</strong><br>${fmtDate(dt)} · ${fmtTime(dt)} – ${fmtTime(end)}<br>Um convite foi enviado para <strong>${esc(form.email)}</strong></p>
-    ${meetUrl?'<div class="meet-link-box"><strong>Link da reunião</strong><div style="display:flex;align-items:center;gap:8px;margin-top:4px"><span id="meeturl" style="flex:1;word-break:break-all;font-size:13px;color:#22367b">'+meetUrl+'</span><button onclick="navigator.clipboard.writeText(''+meetUrl+'').then(()=>{this.textContent='✓ Copiado!';setTimeout(()=>{this.textContent='Copiar'},2000)})" style="flex-shrink:0;padding:6px 14px;border-radius:6px;border:1.5px solid #d3e2f2;background:#fff;color:#22367b;font-weight:700;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif">Copiar</button></div></div>':''}
-    <button class="new-btn" onclick="resetAll()">Fazer novo agendamento</button>
-  </div>`;
+  var meetHtml='';
+  if(meetUrl){
+    meetHtml='<div class="meet-link-box"><strong>Link da reuniao</strong>'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-top:4px">'
+      +'<span style="flex:1;word-break:break-all;font-size:13px;color:#22367b">'+meetUrl+'</span>'
+      +'<button onclick="navigator.clipboard.writeText('+"'"+ meetUrl +"'"+ ').then(function(){this.textContent=\'Copiado!\';var self=this;setTimeout(function(){self.textContent=\'Copiar\'},2000)}.bind(this))" style="flex-shrink:0;padding:6px 14px;border-radius:6px;border:1.5px solid #d3e2f2;background:#fff;color:#22367b;font-weight:700;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif">Copiar</button>'
+      +'</div></div>';
+  }
+  document.getElementById('content').innerHTML='<div class="success-card card">'
+    +'<div class="success-icon">🎉</div>'
+    +'<h2>Agendamento confirmado!</h2>'
+    +'<p class="sub"><strong>'+esc(form.school)+'</strong><br>'+fmtDate(dt)+' - '+fmtTime(dt)+' - '+fmtTime(end)+'<br>Um convite foi enviado para <strong>'+esc(form.email)+'</strong></p>'
+    +meetHtml
+    +'<button class="new-btn" onclick="resetAll()">Fazer novo agendamento</button>'
+    +'</div>';
 }
 function resetAll(){step=1;form={school:'',contact:'',email:'',phone:'',guests:''};chosen=null;meetUrl='';document.getElementById('stepsBar').style.display='';renderSteps();renderStep1();}
 renderSteps();renderStep1();
