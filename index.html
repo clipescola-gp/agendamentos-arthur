@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ClipEscola · Agendar Implantação — Arthur Montardo</title>
+<title>ClipEscola · Agendar Treinamento — Arthur Montardo</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -34,16 +34,15 @@ header{background:var(--blue);padding:0 32px;height:64px;display:flex;align-item
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
 .form-group.full{grid-column:1/-1}
 label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px}
-input,select{width:100%;padding:10px 13px;border-radius:8px;border:1.5px solid var(--light);background:var(--bg);color:var(--blue);font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border .2s}
+input{width:100%;padding:10px 13px;border-radius:8px;border:1.5px solid var(--light);background:var(--bg);color:var(--blue);font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border .2s}
 input:focus{border-color:var(--blue)}
-.btn{display:inline-block;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:'Nunito',sans-serif;transition:opacity .2s}
+.btn{display:inline-block;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:'Nunito',sans-serif}
 .btn-primary{background:var(--blue);color:#fff}
 .btn-primary:disabled{opacity:.45;cursor:not-allowed}
 .btn-secondary{background:#fff;color:var(--blue);border:1.5px solid var(--light)}
 .slots-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .slot-btn{padding:10px 18px;border-radius:8px;border:1.5px solid var(--light);background:#fff;color:var(--blue);font-weight:700;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
 .slot-btn:hover{border-color:var(--blue);background:#e8edf8}
-.slot-btn.selected{border-color:var(--blue);background:var(--blue);color:#fff}
 .summary-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--light);font-size:14px}
 .summary-row:last-child{border-bottom:none}
 .summary-row span:first-child{color:var(--gray);font-weight:600}
@@ -67,9 +66,9 @@ footer{text-align:center;padding:32px;color:var(--gray);font-size:12px;border-to
   <div class="badge">Agendamento</div>
 </header>
 <div class="hero">
-  <div class="hero-tag">Reunião de Implantação</div>
+  <div class="hero-tag">Reunião de Treinamento</div>
   <h1>Agendar com Arthur Montardo</h1>
-  <p>Escolha o melhor horário para a reunião de implantação do seu módulo financeiro.</p>
+  <p>Escolha o melhor horário para a reunião de treinamento do seu módulo financeiro.</p>
   <div class="hero-csm">
     <div class="csm-av">AM</div>
     <div>
@@ -91,6 +90,18 @@ function esc(s){const d=document.createElement('div');d.textContent=s;return d.i
 function fmtDate(d){return d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
 function fmtTime(d){return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}
 function addMin(d,m){return new Date(d.getTime()+m*60000)}
+function genLocalSlots(){
+  const now=new Date(),sla=CFG.slaHours*3600000,res=[];
+  for(let i=0;i<28&&res.length<15;i++){
+    const dt=new Date(now);dt.setDate(dt.getDate()+i);
+    for(const s of SLOTS_CFG.filter(s=>s.day===dt.getDay())){
+      const[h,m]=s.time.split(':').map(Number);
+      const sd=new Date(dt);sd.setHours(h,m,0,0);
+      if(sd-now>=sla)res.push({datetime:sd.toISOString(),label:fmtDate(sd)+' às '+s.time});
+    }
+  }
+  return res;
+}
 function renderSteps(){
   const items=[['1','Dados'],['2','Horário'],['3','Confirmação']];
   document.getElementById('stepsBar').innerHTML=items.map(([n,l],i)=>{
@@ -112,29 +123,18 @@ async function goStep2(){
   if(!form.school||!form.contact||!form.email||!form.phone){alert('Preencha todos os campos obrigatórios.');return;}
   step=2;renderSteps();
   document.getElementById('content').innerHTML='<div class="card"><h2>🕐 Escolha o horário</h2><p style="color:#5a6074;font-size:13px">⏳ Verificando disponibilidade...</p></div>';
-  await loadSlots();
-}
-async function loadSlots(){
   try{
     const r=await fetch(CFG.webhookVerificar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({csmEmail:CSM.email,csmIcsUrl:CSM.icsUrl,slots:SLOTS_CFG,slaHours:CFG.slaHours})});
-    const d=await r.json();availSlots=Array.isArray(d)?d:(d.slots||[]);
-  }catch{
-    const now=new Date(),sla=CFG.slaHours*3600000;availSlots=[];
-    for(let i=0;i<21&&availSlots.length<12;i++){
-      const dt=new Date(now);dt.setDate(dt.getDate()+i);
-      for(const s of SLOTS_CFG.filter(s=>s.day===dt.getDay())){
-        const[h,m]=s.time.split(':').map(Number);
-        const sd=new Date(dt);sd.setHours(h,m,0,0);
-        if(sd-now>=sla)availSlots.push({datetime:sd.toISOString(),label:fmtDate(sd)+' às '+s.time});
-      }
-    }
-  }
+    const d=await r.json();
+    availSlots=Array.isArray(d)?d:(d.slots||[]);
+    if(!availSlots.length)availSlots=genLocalSlots();
+  }catch{availSlots=genLocalSlots();}
   renderStep2();
 }
 function renderStep2(){
   const html=availSlots.length
     ?'<div class="slots-grid">'+availSlots.map((s,i)=>{const dt=new Date(s.datetime);return'<button class="slot-btn" onclick="selectSlot('+i+')">'+(s.label||fmtDate(dt)+' '+fmtTime(dt))+'</button>';}).join('')+'</div>'
-    :'<div class="alert">Nenhum horário disponível no momento.</div>';
+    :'<div class="alert">Nenhum horário disponível no momento. Entre em contato pelo e-mail.</div>';
   document.getElementById('content').innerHTML='<div class="card"><h2>🕐 Escolha o horário</h2>'+html+'</div>';
 }
 function selectSlot(i){
