@@ -132,12 +132,13 @@ async function s2(){
 }
 function loc(){
   var now=new Date(),sla=CFG.slaHours*3600000,res=[];
+  var nowSP=new Date(now.toLocaleString('en-US',{timeZone:'America/Sao_Paulo'}));
   for(var d=0;d<28&&res.length<15;d++){
-    var dt=new Date(now);dt.setDate(dt.getDate()+d);
+    var dt=new Date(nowSP);dt.setDate(dt.getDate()+d);dt.setHours(0,0,0,0);
     for(var i=0;i<SC.length;i++){var s=SC[i];if(s.day!==dt.getDay())continue;
       var p=s.time.split(':');var h=parseInt(p[0]),m=parseInt(p[1]);
       var sd=new Date(dt);sd.setHours(h,m,0,0);
-      if(sd-now>=sla)res.push({datetime:sd.toISOString()});}
+      if(sd-nowSP>=sla)res.push({datetime:sd.toISOString()});}
   }
   return res;
 }
