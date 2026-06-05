@@ -164,10 +164,10 @@ async function cf(){
     if(form.guests)form.guests.split(',').map(function(e){return e.trim();}).filter(Boolean).forEach(function(e){att.push({email:e});});
     var dt=new Date(chosen.datetime);
     var spOpts={timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'};
-    var spDate=dt.toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).split('/').reverse().join('-');
+    var spDateParts=dt.toLocaleDateString('en-CA',{timeZone:'America/Sao_Paulo'});
     var spTime=dt.toLocaleTimeString('pt-BR',spOpts);
     var pl={school:form.school,contact:form.contact,email:form.email,phone:form.phone,guests:form.guests,
-      date:spDate,time:spTime,
+      date:spDateParts,time:spTime,
       csmEmail:CSM.email,csmName:CSM.name,calendarId:CFG.calendarId,
       sheetId:CFG.sheetId,durationMinutes:CFG.meetingDuration,
       sheetData:{Data:dt.toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'}),Horario:spTime,Escola:form.school,Responsavel:form.contact,Email:form.email,Telefone:form.phone,CSM:CSM.name}};
