@@ -34,6 +34,7 @@ header{background:var(--blue);padding:0 32px;height:64px;display:flex;align-item
 label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px}
 input{width:100%;padding:10px 13px;border-radius:8px;border:1.5px solid var(--light);background:var(--bg);color:var(--blue);font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border .2s}
 input:focus{border-color:var(--blue)}
+input.input-error{border-color:#f05252;}
 .btn{display:inline-block;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:'Nunito',sans-serif}
 .btn-primary{background:var(--blue);color:#fff}.btn-primary:disabled{opacity:.45;cursor:not-allowed}
 .btn-secondary{background:#fff;color:var(--blue);border:1.5px solid var(--light)}
@@ -41,7 +42,7 @@ input:focus{border-color:var(--blue)}
 .summary-row:last-child{border-bottom:none}
 .summary-row span:first-child{color:var(--gray);font-weight:600}
 .alert{background:#fffbea;border:1px solid rgba(255,202,38,.5);border-radius:8px;padding:12px 16px;font-size:13px;color:#92400e;margin-bottom:16px}
-.error-box{background:#fde8e8;border:1px solid #f8b4b4;border-radius:8px;padding:12px 16px;font-size:13px;color:#9b1c1c;margin-top:12px}
+.error-box{background:#fde8e8;border:1px solid #f8b4b4;border-radius:8px;padding:12px 16px;font-size:13px;color:#9b1c1c;margin-top:12px;line-height:1.6}
 .success-card{text-align:center;padding:48px 32px}
 .success-icon{width:64px;height:64px;border-radius:50%;background:#def7ec;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:28px}
 .success-card h2{font-size:22px;font-weight:800;margin-bottom:10px;color:#057a55}
@@ -115,7 +116,7 @@ function s1(){
     +'<div class="form-group"><label>Responsavel</label><input id="fc" value=""/></div>'
     +'<div class="form-group"><label>E-mail</label><input id="fe" type="email" value=""/></div>'
     +'<div class="form-group"><label>Telefone</label><input id="fp" value=""/></div>'
-    +'<div class="form-group full"><label>Convidados (opcional, separe por virgula)</label><input id="fg" value=""/></div>'
+    +'<div class="form-group full"><label>Convidados (opcional, separe por virgula)</label><input id="fg" placeholder="email1@exemplo.com, email2@exemplo.com" value=""/></div>'
     +'</div><div style="margin-top:20px"><button class="btn btn-primary" onclick="s2()">Ver horarios disponiveis</button></div></div>';
 }
 async function s2(){
@@ -158,7 +159,8 @@ function pick(i){
 }
 function bk(){step=2;rst();s2r();}
 async function cf(){
-  var btn=document.getElementById('bc');btn.disabled=true;btn.textContent='Confirmando...';
+  var btn=document.getElementById('bc');
+  btn.disabled=true;btn.textContent='Confirmando...';
   try{
     var att=[{email:form.email},{email:CSM.email}];
     if(form.guests)form.guests.split(',').map(function(e){return e.trim();}).filter(Boolean).forEach(function(e){att.push({email:e});});
@@ -171,10 +173,29 @@ async function cf(){
       csmEmail:CSM.email,csmName:CSM.name,calendarId:CFG.calendarId,
       sheetId:CFG.sheetId,durationMinutes:CFG.meetingDuration,
       sheetData:{Data:dt.toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'}),Horario:spTime,Escola:form.school,Responsavel:form.contact,Email:form.email,Telefone:form.phone,CSM:CSM.name}};
+
     var r=await fetch(CFG.webhookAgendar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pl)});
-    var d=await r.json();meetUrl=d.meetLink||d.hangoutLink||d.htmlLink||'';
+    var d=await r.json();
+
+    // ── Tratamento de erro retornado pelo workflow ──────────────────────────
+    if(d.success===false){
+      var msg=d.message||'Erro ao agendar. Verifique os dados e tente novamente.';
+      var extra='';
+      if(d.invalidEntries&&d.invalidEntries.length){
+        extra='<br><strong>Entradas inválidas:</strong> '+d.invalidEntries.map(function(e){return es(e);}).join(', ');
+      }
+      btn.disabled=false;btn.textContent='Confirmar agendamento';
+      document.getElementById('er').innerHTML='<div class="error-box">⚠️ '+es(msg)+extra+'</div>';
+      return;
+    }
+    // ──────────────────────────────────────────────────────────────────────
+
+    meetUrl=d.meetLink||d.hangoutLink||d.htmlLink||'';
     ok();
-  }catch(e){btn.disabled=false;btn.textContent='Confirmar agendamento';document.getElementById('er').innerHTML='<div class="error-box">Erro: '+es(e.message)+'</div>';}
+  }catch(e){
+    btn.disabled=false;btn.textContent='Confirmar agendamento';
+    document.getElementById('er').innerHTML='<div class="error-box">⚠️ Não foi possível confirmar o agendamento. Tente novamente ou entre em contato com seu CSM.</div>';
+  }
 }
 function ok(){
   var dt=new Date(chosen.datetime),end=am(dt,CFG.meetingDuration);
