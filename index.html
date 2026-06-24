@@ -1,225 +1,994 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ClipEscola - Agendar Treinamento - Arthur Montardo</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agendamentos – Arthur | ClipEscola</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--blue:#22367b;--blue2:#1a2d6b;--yellow:#ffca26;--light:#d3e2f2;--white:#fff;--gray:#5a6074;--bg:#f5f7fb;--radius:12px;--shadow:0 4px 24px rgba(34,54,123,.10)}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--blue);min-height:100vh}
-header{background:var(--blue);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.badge{background:rgba(255,202,38,.15);border:1px solid rgba(255,202,38,.4);color:var(--yellow);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
-.hero{background:linear-gradient(135deg,var(--blue) 0%,var(--blue2) 100%);padding:48px 32px 56px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,202,38,.07);top:-80px;right:-80px}
-.hero-tag{display:inline-block;background:rgba(255,202,38,.15);border:1px solid rgba(255,202,38,.35);color:var(--yellow);font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px}
-.hero h1{color:#fff;font-size:28px;font-weight:800;margin-bottom:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Nunito,sans-serif;background:#f0f2f7;min-height:100vh}
+.hd{display:none!important}
+
+.hdr{background:#22367b;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:relative}
+.hdr img{height:36px;object-fit:contain}
+.badge{background:rgba(255,202,38,.15);border:1px solid rgba(255,202,38,.4);color:#ffca26;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+#admin-gear{position:absolute;right:12px;bottom:6px;font-size:11px;color:rgba(255,255,255,.2);cursor:pointer;user-select:none;display:block}
+
+.hero{background:linear-gradient(135deg,#22367b 0%,#1a2d6b 100%);padding:48px 32px 56px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,202,38,.07);top:-80px;right:-60px}
+.hero-tag{display:inline-block;background:rgba(255,202,38,.15);border:1px solid rgba(255,202,38,.35);color:#ffca26;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{color:#fff;font-size:28px;font-weight:800;margin-bottom:4px}
+.hero .hero-sub{color:rgba(255,255,255,.6);font-size:14px;margin-bottom:10px}
 .hero p{color:rgba(255,255,255,.75);font-size:15px;max-width:480px;margin:0 auto 20px}
-.hero-csm{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:8px 16px}
-.csm-av{width:32px;height:32px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--blue);font-size:14px}
-.csm-name{color:#fff;font-weight:700;font-size:13px}
-.csm-role{color:rgba(255,255,255,.65);font-size:11px}
-.steps-bar{background:#fff;border-bottom:1px solid var(--light);padding:16px 32px;display:flex;align-items:center;justify-content:center}
-.step-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gray)}
-.step-item.active{color:var(--blue)}.step-item.done{color:#057a55}
-.step-num{width:26px;height:26px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
-.step-item.active .step-num{background:var(--blue);border-color:var(--blue);color:#fff}
-.step-item.done .step-num{background:#057a55;border-color:#057a55;color:#fff}
-.step-sep{width:32px;height:2px;background:var(--light);margin:0 4px}
-.main{max-width:680px;margin:0 auto;padding:32px 24px}
-.card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:28px;margin-bottom:20px;box-shadow:var(--shadow)}
-.card h2{font-size:17px;font-weight:800;margin-bottom:20px;color:var(--blue)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
-.form-group.full{grid-column:1/-1}
-label{display:block;font-size:11px;font-weight:700;color:var(--gray);margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px}
-input{width:100%;padding:10px 13px;border-radius:8px;border:1.5px solid var(--light);background:var(--bg);color:var(--blue);font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border .2s}
-input:focus{border-color:var(--blue)}
-input.input-error{border-color:#f05252;}
-.btn{display:inline-block;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:'Nunito',sans-serif}
-.btn-primary{background:var(--blue);color:#fff}.btn-primary:disabled{opacity:.45;cursor:not-allowed}
-.btn-secondary{background:#fff;color:var(--blue);border:1.5px solid var(--light)}
-.summary-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--light);font-size:14px}
-.summary-row:last-child{border-bottom:none}
-.summary-row span:first-child{color:var(--gray);font-weight:600}
-.alert{background:#fffbea;border:1px solid rgba(255,202,38,.5);border-radius:8px;padding:12px 16px;font-size:13px;color:#92400e;margin-bottom:16px}
-.error-box{background:#fde8e8;border:1px solid #f8b4b4;border-radius:8px;padding:12px 16px;font-size:13px;color:#9b1c1c;margin-top:12px;line-height:1.6}
-.success-card{text-align:center;padding:48px 32px}
-.success-icon{width:64px;height:64px;border-radius:50%;background:#def7ec;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:28px}
-.success-card h2{font-size:22px;font-weight:800;margin-bottom:10px;color:#057a55}
-.success-card .sub{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:24px}
-.meet-link-box{background:var(--bg);border:1.5px solid var(--light);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--gray);word-break:break-all;margin-bottom:20px;text-align:left}
-.meet-link-box strong{display:block;margin-bottom:4px;color:var(--blue);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
-.new-btn{background:none;border:1.5px solid var(--light);color:var(--gray);padding:10px 24px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;font-family:'Nunito',sans-serif}
-footer{text-align:center;padding:32px;color:var(--gray);font-size:12px;border-top:1px solid var(--light);margin-top:16px}
-@media(max-width:600px){.form-row{grid-template-columns:1fr}.form-group.full{grid-column:auto}.hero h1{font-size:22px}.main{padding:20px 16px}}
+.hero-meta{display:inline-flex;align-items:center;gap:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:8px 20px;color:#fff;font-size:13px;font-weight:700}
+.hero-steps{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:20px}
+.hero-step{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:7px 16px;color:rgba(255,255,255,.85);font-size:12px;font-weight:700}
+.hs-n{background:#ffca26;color:#22367b;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+
+.wrap{max-width:700px;margin:0 auto;padding:28px 16px}
+.card{background:#fff;border-radius:12px;padding:22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ttl{font-size:15px;font-weight:800;color:#22367b;margin-bottom:14px}
+
+.tc{display:flex;align-items:center;padding:14px 16px;border-radius:10px;margin-bottom:8px;border:2px solid #e5e7eb;cursor:pointer;user-select:none;transition:all .15s}
+.tc:hover{border-color:#22367b;background:#eff6ff}
+.tc.sel{border-color:#22367b;background:#eff6ff}
+.tc .tn{font-weight:700;font-size:14px;color:#374151}
+.tc .td{font-size:12px;color:#6b7280;margin-left:8px}
+.tc.sel .tn{color:#22367b}
+.tc-desc{font-size:12px;color:#6b7280;margin-top:4px;line-height:1.5}
+.tc.sel .tc-desc{color:#4b6cb7}
+
+label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:9px 12px;border:1.5px solid #d1d5db;border-radius:8px;font-size:14px;font-family:inherit;outline:none;color:#111827;background:#fff}
+input:focus,select:focus,textarea:focus{border-color:#22367b}
+input[readonly]{background:#f9fafb;color:#6b7280;cursor:default}
+
+.btn{padding:11px 22px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;background:#22367b;color:#fff;transition:opacity .15s}
+.btn:hover{opacity:.88}.btn:disabled{opacity:.4;cursor:default}
+.btn-outline{padding:10px 20px;border-radius:8px;border:1.5px solid #22367b;background:#fff;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;color:#22367b;transition:all .15s}
+.btn-outline:hover{background:#eff6ff}
+/* Modal copiar para */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{background:#fff;border-radius:14px;padding:24px;max-width:420px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.modal-title{font-size:15px;font-weight:800;color:#22367b;margin-bottom:4px}
+.modal-sub{font-size:12px;color:#6b7280;margin-bottom:14px;line-height:1.5}
+.modal-sel-all{font-size:12px;font-weight:700;color:#22367b;cursor:pointer;display:inline-block;margin-bottom:10px;padding:4px 10px;border-radius:6px;border:1px solid #c7d7f5;background:#eff6ff}
+.modal-check-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1.5px solid #e5e7eb;margin-bottom:7px;cursor:pointer;user-select:none;transition:all .15s}
+.modal-check-row:hover{border-color:#22367b;background:#eff6ff}
+.modal-check-row.selected{border-color:#22367b;background:#eff6ff}
+.modal-check-row label{text-transform:none;letter-spacing:0;font-size:13px;font-weight:700;color:#374151;cursor:pointer;flex:1}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.back{padding:10px 20px;border-radius:8px;border:1px solid #e5e7eb;background:#f9fafb;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;color:#6b7280}
+
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cc{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:13px;font-weight:600;cursor:default;border:2px solid transparent;user-select:none}
+.av{background:#f0fdf4;color:#166534;cursor:pointer;font-weight:700}.av:hover{background:#dcfce7}
+.sl{background:#22367b!important;color:#fff!important;border-color:#22367b!important}
+.em{color:#d1d5db}
+.cnav{display:flex;gap:6px;align-items:center}
+.cnav button{padding:5px 10px;border-radius:6px;border:1px solid #e5e7eb;background:#f9fafb;cursor:pointer;font-family:inherit;font-size:14px}
+.tz-note{font-size:11px;font-weight:700;background:#fef9c3;border:1px solid #fde047;color:#713f12;padding:4px 10px;border-radius:6px;display:inline-block;margin-bottom:10px}
+
+.ts{padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;background:#f0f9ff;color:#0369a1;border:2px solid #bae6fd;font-family:inherit;user-select:none;display:inline-block;margin:4px}
+.ts.sel{background:#22367b;color:#fff;border-color:#22367b}
+
+.loading{text-align:center;padding:32px;color:#6b7280;font-size:14px}
+.info-bar{background:#eff6ff;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:#22367b;font-weight:600}
+.frow{display:flex;flex-direction:column;gap:12px}
+.ferr{color:#dc2626;font-size:13px;margin-top:10px;display:none}
+.succ-box{background:#ecfdf5;border:2px solid #6ee7b7;border-radius:12px;padding:32px;text-align:center}
+.meet-box{margin-top:14px;background:#eff6ff;border-radius:8px;padding:12px 14px}
+.meet-ttl{font-weight:800;color:#22367b;font-size:13px;margin-bottom:8px}
+.meet-row{display:flex;align-items:center;gap:8px}
+.meet-link{flex:1;word-break:break-all;color:#1d4ed8;font-size:13px}
+.copy-btn{flex-shrink:0;padding:6px 14px;border-radius:6px;border:1.5px solid #d3e2f2;background:#fff;color:#22367b;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit}
+
+/* Admin tabs */
+.adm-wrap{max-width:860px;margin:0 auto;padding:24px 16px}
+.adm-header{background:#fff;border-radius:12px;padding:16px 20px;margin-bottom:4px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.adm-header-info{font-size:14px;font-weight:700;color:#22367b}
+.adm-header-info span{color:#6b7280;font-weight:600;font-size:13px;margin-left:6px}
+.adm-status{display:inline-block;background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.adm-status.inactive{background:#fee2e2;color:#dc2626}
+
+.tab-nav{display:flex;border-bottom:2px solid #e5e7eb;margin-bottom:0;background:#fff;border-radius:12px 12px 0 0;padding:0 16px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow-x:auto}
+.tab-btn{padding:14px 18px;font-size:13px;font-weight:700;color:#6b7280;background:none;border:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:inherit;white-space:nowrap;transition:color .15s}
+.tab-btn:hover{color:#22367b}
+.tab-btn.active{color:#22367b;border-bottom-color:#22367b}
+
+.tab-panel{background:#fff;border-radius:0 0 12px 12px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:none}
+.tab-panel.active{display:block}
+
+.section-ttl{font-size:14px;font-weight:800;color:#22367b;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #f3f4f6}
+
+/* Horários por tipo */
+.type-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.type-tab{padding:7px 16px;border-radius:8px;border:1.5px solid #e5e7eb;background:#f9fafb;font-size:13px;font-weight:700;color:#6b7280;cursor:pointer;font-family:inherit;transition:all .15s}
+.type-tab:hover{border-color:#22367b;color:#22367b}
+.type-tab.active{background:#22367b;color:#fff;border-color:#22367b}
+
+.slot-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.slot-row select{width:130px;flex-shrink:0}
+.slot-row input[type=time]{width:110px;flex-shrink:0}
+.slot-row .until{font-size:12px;color:#6b7280;font-weight:700;white-space:nowrap}
+.slot-row .btn-rm{padding:6px 12px;border-radius:7px;border:none;background:#fee2e2;color:#dc2626;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* Tipos de reunião */
+.mt-row{border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:10px;background:#fafafa}
+.mt-fields{display:grid;grid-template-columns:1fr 130px 50px auto;gap:10px;align-items:center}
+.mt-preview{font-size:11px;color:#6b7280;margin-top:6px}
+.mt-preview strong{color:#22367b}
+
+/* Login */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 64px);padding:24px}
+.login-box{background:#fff;border-radius:14px;padding:32px;width:100%;max-width:340px;box-shadow:0 4px 20px rgba(0,0,0,.1);text-align:center}
+
+.toast{position:fixed;bottom:20px;right:20px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:300;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.adm-msg-bar{border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;margin-top:12px;display:none}
+.adm-msg-bar.ok{background:#ecfdf5;color:#057a55;border:1px solid #6ee7b7}
+.adm-msg-bar.err{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5}
+
+@media(max-width:600px){
+  .hero{padding:32px 16px 44px}
+  .tab-panel,.card{padding:14px}
+  .mt-fields{grid-template-columns:1fr 90px 44px auto}
+  .slot-row select{width:100px}
+}
 </style>
 </head>
 <body>
-<header><img src="https://i.imgur.com/IVPOWqc.png" alt="ClipEscola" style="height:36px;object-fit:contain"/><div class="badge">Agendamento</div></header>
-<div class="hero">
-  <div class="hero-tag">Reuniao de Treinamento</div>
-  <h1>Agendar com Arthur Montardo</h1>
-  <p>Escolha o melhor horario para a reuniao de treinamento do seu modulo financeiro.</p>
-  <div class="hero-csm"><div class="csm-av">AM</div><div><div class="csm-name">Arthur Montardo</div><div class="csm-role">Gerente de Produtos Financeiros</div></div></div>
+
+<div class="hdr">
+  <img src="https://i.imgur.com/IVPOWqc.png" alt="ClipEscola" onerror="this.style.display='none'" style="height:36px;object-fit:contain">
+  <div class="badge" id="hdr-badge">CS – Arthur</div>
+  <span id="admin-gear" onclick="goAdmin()" title="Retaguarda">⚙</span>
 </div>
-<div class="steps-bar" id="sb"></div>
-<div class="main"><div id="ct"></div></div>
-<footer>ClipEscola - Reuniao conduzida por <strong>Arthur Montardo</strong> - Gerente de Produtos Financeiros</footer>
+
+<!-- ══════════════════════════ PÚBLICO ══════════════════════════ -->
+<div id="view-public">
+  <div class="hero" id="hero-area">
+    <div class="hero-tag">Agendamentos ClipEscola</div>
+    <h1 id="hero-name">Arthur</h1>
+    <div class="hero-sub" id="hero-title"></div>
+    <p>Agende agora sua próxima reunião.</p>
+    <div class="hero-meta" id="hero-meta">🌎 Horário de Brasília</div>
+    <div class="hero-steps">
+      <div class="hero-step"><span class="hs-n">1</span><span>Escolha o tipo de reunião</span></div>
+      <div class="hero-step"><span class="hs-n">2</span><span>Selecione data e horário</span></div>
+      <div class="hero-step"><span class="hs-n">3</span><span>Preencha seus dados e confirme</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+
+    <!-- Step 0: Tipo de reunião -->
+    <div id="s0" class="card">
+      <div class="ttl">Qual o tipo de reunião?</div>
+      <div id="type-list"></div>
+      <div id="no-types" class="hd" style="color:#6b7280;font-size:14px;padding:12px 0">Nenhum tipo de reunião configurado.</div>
+      <button class="btn" id="btn0" disabled style="margin-top:12px">Próximo →</button>
+    </div>
+
+    <!-- Step 1: Calendário -->
+    <div id="s1" class="card hd">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="ttl" style="margin:0">Escolha a data e horário</div>
+        <div class="cnav">
+          <button id="prev-m">&#8249;</button>
+          <span id="cal-lbl" style="font-size:13px;font-weight:700;min-width:110px;text-align:center"></span>
+          <button id="next-m">&#8250;</button>
+        </div>
+      </div>
+      <div class="tz-note">🌎 Horário de Brasília (GMT-3)</div>
+      <div id="cal-wrap"><div class="loading">⏳ Verificando disponibilidade...</div></div>
+      <div id="tw" class="hd" style="margin-top:16px">
+        <div id="tl" style="font-size:13px;font-weight:700;color:#6b7280;margin-bottom:8px"></div>
+        <div id="times" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <button class="back" id="back1">← Voltar</button>
+        <button class="btn" id="btn1" disabled>Próximo →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Dados -->
+    <div id="s2" class="card hd">
+      <div class="ttl">Preencha seus dados</div>
+      <div class="info-bar" id="ibar"></div>
+      <div class="frow">
+        <div><label>Nome da Escola *</label><input id="fi-school" placeholder="Ex: Colégio São Paulo"></div>
+        <div><label>Responsável *</label><input id="fi-contact" placeholder="Ex: João Silva"></div>
+        <div><label>E-mail *</label><input id="fi-email" type="email" placeholder="joao@escola.com.br"></div>
+        <div><label>Telefone / WhatsApp *</label><input id="fi-phone" placeholder="(48) 99999-0000"></div>
+        <div><label>Outros participantes (opcional)</label><input id="fi-guests" placeholder="e-mails separados por vírgula"></div>
+      </div>
+      <div id="ferr" class="ferr">Preencha todos os campos obrigatórios.</div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="back" id="back2">← Voltar</button>
+        <button class="btn" id="btn2">Confirmar agendamento</button>
+      </div>
+    </div>
+
+    <!-- Sucesso -->
+    <div id="succ" class="succ-box hd">
+      <div style="font-size:44px;margin-bottom:10px">✅</div>
+      <div style="font-size:18px;font-weight:800;color:#057a55;margin-bottom:6px">Reunião agendada com sucesso!</div>
+      <div id="sd" style="color:#374151;font-size:14px;line-height:1.8;margin-bottom:6px"></div>
+      <p style="color:#6b7280;font-size:13px">Um convite foi enviado para o seu e-mail.</p>
+      <button class="btn" style="margin-top:16px" id="succ-btn">Novo agendamento</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ ADMIN ══════════════════════════ -->
+<div id="view-admin" class="hd">
+
+  <!-- Login -->
+  <div class="login-wrap" id="adm-login">
+    <div class="login-box">
+      <div style="font-size:36px;margin-bottom:10px">🔐</div>
+      <div style="font-size:17px;font-weight:800;color:#22367b;margin-bottom:4px">Retaguarda</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:20px">Arthur – ClipEscola</div>
+      <input type="password" id="adm-pw" placeholder="Senha" style="margin-bottom:10px" autocomplete="off">
+      <button class="btn" style="width:100%" onclick="checkPw()">Entrar</button>
+      <div id="pw-err" style="color:#dc2626;font-size:12px;margin-top:8px;display:none">Senha incorreta.</div>
+    </div>
+  </div>
+
+  <!-- Painel -->
+  <div id="adm-panel" class="hd">
+    <div class="adm-wrap">
+
+      <!-- Header info -->
+      <div class="adm-header">
+        <div>
+          <div class="adm-header-info" id="adm-hdr-name">Configurações — <span id="adm-hdr-sub">Davi</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="adm-status" id="adm-status-badge">● Ativo</span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('dados')"    id="tab-dados">👤 Dados do CSM</button>
+        <button class="tab-btn"        onclick="switchTab('horarios')" id="tab-horarios">📅 Horários</button>
+        <button class="tab-btn"        onclick="switchTab('tipos')"    id="tab-tipos">🎯 Tipos de Reunião</button>
+        <button class="tab-btn"        onclick="switchTab('config')"   id="tab-config">⚙️ Configurações</button>
+      </div>
+
+      <!-- Aba: Dados do CSM -->
+      <div class="tab-panel active" id="panel-dados">
+        <div class="section-ttl">● Informações do CSM</div>
+        <div class="frow">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div><label>Nome</label><input id="d-name" placeholder="Ex: Davi"></div>
+            <div><label>Cargo</label><input id="d-title" placeholder="Ex: Customer Success Manager"></div>
+          </div>
+          <div><label>E-mail</label><input id="d-email" type="email" placeholder="arthurmontardo.clipescola@gmail.com"></div>
+          <div>
+            <label>Link ICS Público da Agenda Google</label>
+            <input id="d-ics" placeholder="https://calendar.google.com/calendar/ical/...">
+            <div style="font-size:11px;color:#6b7280;margin-top:4px">Google Agenda → Configurações → Integrar agenda → URL pública ICS</div>
+          </div>
+          <div>
+            <label>Status</label>
+            <select id="d-status">
+              <option value="active">✅ Ativo</option>
+              <option value="inactive">🔴 Inativo</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+          <button class="btn" onclick="salvarDados()">💾 Salvar configurações</button>
+        </div>
+        <div class="adm-msg-bar" id="msg-dados"></div>
+      </div>
+
+      <!-- Aba: Horários -->
+      <div class="tab-panel" id="panel-horarios">
+        <div class="section-ttl">📅 Horários Disponíveis</div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:16px">Novos tipos aparecem automaticamente nesta aba ao serem criados.</div>
+        <div id="type-tabs-horarios" class="type-tabs"></div>
+        <div id="slots-editor"></div>
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+          <button class="btn-outline" onclick="addSlotRow()">+ Horário</button>
+          <button class="btn" onclick="salvarHorarios()">💾 Salvar</button>
+          <button class="btn-outline" onclick="copiarPara()" style="background:#fef9c3;border-color:#fde047;color:#713f12">📋 Copiar para...</button>
+        </div>
+        <div class="adm-msg-bar" id="msg-horarios"></div>
+      </div>
+
+      <!-- Aba: Tipos de Reunião -->
+      <div class="tab-panel" id="panel-tipos">
+        <div class="section-ttl">🎯 Tipos de Reunião</div>
+        <div style="font-size:13px;color:#6b7280;margin-bottom:16px">Novos tipos aparecem automaticamente na aba Horários.</div>
+        <div id="mt-list"></div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button class="btn-outline" onclick="addMeetingType()">+ Adicionar tipo</button>
+          <button class="btn" onclick="salvarTipos()">💾 Salvar</button>
+        </div>
+        <div class="adm-msg-bar" id="msg-tipos"></div>
+      </div>
+
+      <!-- Aba: Configurações -->
+      <div class="tab-panel" id="panel-config">
+        <div class="section-ttl">● Configurações do sistema</div>
+        <div class="frow">
+          <div><label>Webhook Verificar</label><input id="c-wv" placeholder="https://n8n.clipescola.com.br/webhook/verificar-arthur"></div>
+          <div><label>Webhook Agendar</label><input id="c-wa" placeholder="https://n8n.clipescola.com.br/webhook/agendar-arthur"></div>
+          <div><label>Calendar ID</label><input id="c-calid" placeholder="arthurmontardo.clipescola@gmail.com"></div>
+          <div><label>URL da Página (para reagendamento)</label><input id="c-pageurl" placeholder="https://clipescola-gp.github.io/agendamentos-arthur/"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div><label>SLA Mínimo (horas)</label><input id="c-sla" type="number" min="0" max="168" value="48"></div>
+            <div><label>Senha Admin</label><input id="c-pw" type="text" placeholder="clip2025"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+          <button class="btn" onclick="salvarConfig()">💾 Salvar configurações</button>
+        </div>
+        <div class="adm-msg-bar" id="msg-config"></div>
+      </div>
+
+      <div style="margin-top:8px">
+        <button class="back" onclick="goPublic()">← Voltar ao site</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-var CSM={"name":"Arthur Montardo","title":"Gerente de Produtos Financeiros","email":"arthurmontardo.clipescola@gmail.com","icsUrl":"https://calendar.google.com/calendar/ical/arthurmontardo.clipescola%40gmail.com/private-0b17c114bce7286b5a663c1680bfb490/basic.ics","active":true,"slots":[{"day":1,"time":"09:30"},{"day":1,"time":"14:30"},{"day":2,"time":"09:30"},{"day":2,"time":"14:30"},{"day":3,"time":"09:30"},{"day":3,"time":"14:30"},{"day":4,"time":"09:30"},{"day":4,"time":"14:30"},{"day":5,"time":"09:30"},{"day":5,"time":"14:00"}]};
-var CFG={"webhookVerificar":"https://n8n.clipescola.com.br/webhook/verificar-disponibilidade-gpf","webhookAgendar":"https://n8n.clipescola.com.br/webhook/agendar-gpf","calendarId":"clipescola@clipescola.sale","sheetId":"16OBANG9-vCMmCZpmQUcgcYR2m_EK9RD5TNV5Gm9_2ow","slaHours":48,"meetingTitle":"Reunião ClipEscola — Produtos Financeiros","meetingDuration":120};
-var SC=[{"day":1,"time":"09:30"},{"day":1,"time":"14:30"},{"day":2,"time":"09:30"},{"day":2,"time":"14:30"},{"day":3,"time":"09:30"},{"day":3,"time":"14:30"},{"day":4,"time":"09:30"},{"day":4,"time":"14:30"},{"day":5,"time":"09:30"},{"day":5,"time":"14:00"}];
-var step=1,form={school:'',contact:'',email:'',phone:'',guests:''},chosen=null,meetUrl='',avail=[];
-function ft(d){return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
-function fd(d){return d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});}
-function am(d,m){return new Date(d.getTime()+m*60000);}
-function es(s){var x=document.createElement('div');x.textContent=s;return x.innerHTML;}
-function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
-function buildCal(slots){
-var M=['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-var D=['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
-var bm={};
-for(var i=0;i<slots.length;i++){
-  var s=slots[i];var dt=new Date(s.datetime);
-  var mk=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');
-  if(!bm[mk])bm[mk]={y:dt.getFullYear(),mo:dt.getMonth(),sl:[]};
-  bm[mk].sl.push({dt:dt,idx:i});
-}
-var html='';var mks=Object.keys(bm).sort();
-for(var mi=0;mi<mks.length;mi++){
-  var g=bm[mks[mi]];
-  var fd=new Date(g.y,g.mo,1).getDay();
-  var dim=new Date(g.y,g.mo+1,0).getDate();
-  var sm={};
-  for(var si=0;si<g.sl.length;si++){var ss=g.sl[si];var dd=ss.dt.getDate();if(!sm[dd])sm[dd]=[];sm[dd].push(ss);}
-  var hd='';for(var di=0;di<D.length;di++){hd+='<div style="text-align:center;font-size:11px;font-weight:700;color:#5a6074;padding:4px 0">'+D[di]+'</div>';}
-  var gr='';for(var ei=0;ei<fd;ei++)gr+='<div></div>';
-  for(var n=1;n<=dim;n++){
-    var ds=sm[n]||[];
-    if(!ds.length){gr+='<div style="min-height:52px;border-radius:8px;background:#f5f7fb;display:flex;align-items:center;justify-content:center;font-size:13px;color:#c0c8d8;font-weight:600">'+n+'</div>';}
-    else{var ts2='';for(var ti=0;ti<ds.length;ti++){var sl2=ds[ti];ts2+='<button onclick="pick('+sl2.idx+')" style="display:block;width:100%;padding:2px 0;border:none;background:none;cursor:pointer;font-size:11px;font-weight:700;color:#1a56db;font-family:Nunito,sans-serif;border-radius:4px">'+ft(sl2.dt)+'</button>';}
-      gr+='<div style="min-height:52px;border-radius:8px;background:#e8f0fe;border:1.5px solid #c5d8f8;padding:4px 3px"><div style="text-align:center;font-size:12px;font-weight:800;color:#22367b;margin-bottom:2px">'+n+'</div>'+ts2+'</div>';}
-  }
-  html+='<div style="margin-bottom:28px"><div style="font-weight:800;font-size:15px;color:#22367b;margin-bottom:12px">'+M[g.mo]+' '+g.y+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px">'+hd+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">'+gr+'</div></div>';
-}
-return html;
-}
-function rst(){
-  var it=[['1','Dados'],['2','Horario'],['3','Confirmacao']];var h='';
-  for(var i=0;i<it.length;i++){var n=it[i][0],l=it[i][1],s=i+1,c=s<step?'done':s===step?'active':'';
-    h+=(i?'<div class="step-sep"></div>':'')+'<div class="step-item '+c+'"><div class="step-num">'+(s<step?'v':n)+'</div>'+l+'</div>';}
-  document.getElementById('sb').innerHTML=h;
-}
-function s1(){
-  document.getElementById('ct').innerHTML='<div class="card"><h2>Dados da instituicao</h2><div class="form-row">'
-    +'<div class="form-group full"><label>Nome da instituicao</label><input id="fs" value=""/></div>'
-    +'<div class="form-group"><label>Responsavel</label><input id="fc" value=""/></div>'
-    +'<div class="form-group"><label>E-mail</label><input id="fe" type="email" value=""/></div>'
-    +'<div class="form-group"><label>Telefone</label><input id="fp" value=""/></div>'
-    +'<div class="form-group full"><label>Convidados (opcional, separe por virgula)</label><input id="fg" placeholder="email1@exemplo.com, email2@exemplo.com" value=""/></div>'
-    +'</div><div style="margin-top:20px"><button class="btn btn-primary" onclick="s2()">Ver horarios disponiveis</button></div></div>';
-}
-async function s2(){
-  form={school:gv('fs'),contact:gv('fc'),email:gv('fe'),phone:gv('fp'),guests:gv('fg')};
-  if(!form.school||!form.contact||!form.email||!form.phone){alert('Preencha todos os campos.');return;}
-  step=2;rst();
-  document.getElementById('ct').innerHTML='<div class="card"><h2>Escolha o horario</h2><p style="color:#5a6074;font-size:13px">Verificando disponibilidade...</p></div>';
-  try{
-    var r=await fetch(CFG.webhookVerificar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({csmEmail:CSM.email,csmIcsUrl:CSM.icsUrl,slots:SC,slaHours:CFG.slaHours})});
-    var d=await r.json();avail=Array.isArray(d)?d:(d.slots||[]);
-    if(!avail.length)throw new Error('empty');
-  }catch(e){avail=loc();}
-  s2r();
-}
-function loc(){
-  var now=new Date(),sla=CFG.slaHours*3600000,res=[];
-  var nowSP=new Date(now.toLocaleString('en-US',{timeZone:'America/Sao_Paulo'}));
-  for(var d=0;d<28&&res.length<15;d++){
-    var dt=new Date(nowSP);dt.setDate(dt.getDate()+d);dt.setHours(0,0,0,0);
-    for(var i=0;i<SC.length;i++){var s=SC[i];if(s.day!==dt.getDay())continue;
-      var p=s.time.split(':');var h=parseInt(p[0]),m=parseInt(p[1]);
-      var sd=new Date(dt);sd.setHours(h,m,0,0);
-      if(sd-nowSP>=sla)res.push({datetime:sd.toISOString()});}
-  }
-  return res;
-}
-function s2r(){
-  if(!avail.length){document.getElementById('ct').innerHTML='<div class="card"><h2>Escolha o horario</h2><div class="alert">Nenhum horario disponivel.</div></div>';return;}
-  var tzNote='<p style="color:#5a6074;font-size:11px;margin-bottom:16px">🕐 Todos os horarios estao no fuso horario de Sao Paulo (GMT-3)</p>';
-  document.getElementById('ct').innerHTML='<div class="card"><h2>Escolha o horario</h2>'+tzNote+buildCal(avail)+'</div>';
-}
-function pick(i){
-  chosen=avail[i];step=3;rst();
-  var dt=new Date(chosen.datetime),end=am(dt,CFG.meetingDuration);
-  var rows=[['Instituicao',form.school],['Responsavel',form.contact],['E-mail',form.email],['Telefone',form.phone]];
-  if(form.guests)rows.push(['Convidados',form.guests]);
-  rows.push(['Data',fd(dt)],['Horario',ft(dt)+' - '+ft(end)],['Duracao',CFG.meetingDuration+' min']);
-  var rh='';for(var ri=0;ri<rows.length;ri++){rh+='<div class="summary-row"><span>'+rows[ri][0]+'</span><span>'+es(String(rows[ri][1]))+'</span></div>';}
-  document.getElementById('ct').innerHTML='<div class="card"><h2>Confirmar agendamento</h2><div style="margin-bottom:20px">'+rh+'</div><div id="er"></div><div style="display:flex;gap:10px"><button class="btn btn-secondary" onclick="bk()">Voltar</button><button class="btn btn-primary" id="bc" onclick="cf()">Confirmar agendamento</button></div></div>';
-}
-function bk(){step=2;rst();s2r();}
-async function cf(){
-  var btn=document.getElementById('bc');
-  btn.disabled=true;btn.textContent='Confirmando...';
-  try{
-    var att=[{email:form.email},{email:CSM.email}];
-    if(form.guests)form.guests.split(',').map(function(e){return e.trim();}).filter(Boolean).forEach(function(e){att.push({email:e});});
-    var dt=new Date(chosen.datetime);
-    var spOpts={timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'};
-    var spDateParts=dt.toLocaleDateString('en-CA',{timeZone:'America/Sao_Paulo'});
-    var spTime=dt.toLocaleTimeString('pt-BR',spOpts);
-    var pl={school:form.school,contact:form.contact,email:form.email,phone:form.phone,guests:form.guests,
-      date:spDateParts,time:spTime,
-      csmEmail:CSM.email,csmName:CSM.name,calendarId:CFG.calendarId,
-      sheetId:CFG.sheetId,durationMinutes:CFG.meetingDuration,
-      sheetData:{Data:dt.toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'}),Horario:spTime,Escola:form.school,Responsavel:form.contact,Email:form.email,Telefone:form.phone,CSM:CSM.name}};
+// ═══ ENDPOINTS (configurados via admin → aba Configurações) ═══
+var WV      = 'https://n8n.clipescola.com.br/webhook/verificar-arthur';
+var WA      = 'https://n8n.clipescola.com.br/webhook/agendar-arthur';
+var WC_GET  = 'https://n8n.clipescola.com.br/webhook/config-arthur';
+var WC_SAVE = 'https://n8n.clipescola.com.br/webhook/config-arthur-save';
+var ADMIN_PW = 'clip2025';
+// ══════════════════════════════════════════════════════════════
 
-    var r=await fetch(CFG.webhookAgendar,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pl)});
-    var d=await r.json();
-
-    // ── Tratamento de erro retornado pelo workflow ──────────────────────────
-    if(d.success===false){
-      var msg=d.message||'Erro ao agendar. Verifique os dados e tente novamente.';
-      var extra='';
-      if(d.invalidEntries&&d.invalidEntries.length){
-        extra='<br><strong>Entradas inválidas:</strong> '+d.invalidEntries.map(function(e){return es(e);}).join(', ');
-      }
-      btn.disabled=false;btn.textContent='Confirmar agendamento';
-      document.getElementById('er').innerHTML='<div class="error-box">⚠️ '+es(msg)+extra+'</div>';
-      return;
+var cfg = {
+  csm: {
+    name:   'Arthur Montardo',
+    title:  'Customer Success Manager',
+    email:  'arthurmontardo.clipescola@gmail.com',
+    icsUrl: 'https://calendar.google.com/calendar/ical/arthurmontardo.clipescola%40gmail.com/public/basic.ics',
+    status: 'active'
+  },
+  system: {
+    webhookVerificar: WV,
+    webhookAgendar:   WA,
+    calendarId:       'arthurmontardo.clipescola@gmail.com',
+    sheetId:          '',
+    meetingTitle:     'Reunião ClipEscola',
+    slaHours:         48,
+    pageUrl:          'https://clipescola-gp.github.io/agendamentos-arthur/'
+  },
+  meetingTypes: [
+    {
+      id: 'mt1', name: 'Treinamento ClipEscola', duration: 120, active: true,
+      desc: 'Treinamento completo para produtos financeiros (Clippag, ClipMarket ou Nota Fiscal).',
+      slots: [
+        {day:1,time:'09:30'},{day:1,time:'14:30'},
+        {day:2,time:'09:30'},{day:2,time:'14:30'},
+        {day:3,time:'09:30'},{day:3,time:'14:30'},
+        {day:4,time:'09:30'},{day:4,time:'14:30'},
+        {day:5,time:'09:30'},{day:5,time:'14:30'}
+      ]
+    },
+    {
+      id: 'mt2', name: 'Assistência', duration: 120, active: true,
+      desc: 'Para assistências gerais como usabilidade e configurações sobre produtos financeiros (Clippag, ClipMarket ou Nota Fiscal).',
+      slots: [
+        {day:1,time:'09:30'},{day:1,time:'14:30'},
+        {day:2,time:'09:30'},{day:2,time:'14:30'},
+        {day:3,time:'09:30'},{day:3,time:'14:30'},
+        {day:4,time:'09:30'},{day:4,time:'14:30'},
+        {day:5,time:'09:30'},{day:5,time:'14:30'}
+      ]
     }
-    // ──────────────────────────────────────────────────────────────────────
+  ]
+};
 
-    meetUrl=d.meetLink||d.hangoutLink||d.htmlLink||'';
-    ok();
-  }catch(e){
-    btn.disabled=false;btn.textContent='Confirmar agendamento';
-    document.getElementById('er').innerHTML='<div class="error-box">⚠️ Não foi possível confirmar o agendamento. Tente novamente ou entre em contato com seu CSM.</div>';
+var availDays = {};
+var cy = new Date().getFullYear(), cm = new Date().getMonth();
+var selDate='', selTime='', selTypeId='', selTypeName='', selTypeDur=60;
+var activeTypeTabId = '';
+var _submitting = false;
+
+var MONTHS = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+var DS     = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+var DL     = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+var DOWMAP = {0:'Dom',1:'Seg',2:'Ter',3:'Qua',4:'Qui',5:'Sex',6:'Sáb'};
+var DOWNAMES = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+
+function pad(n){return ('0'+n).slice(-2);}
+function addMin(t,m){var p=t.split(':'),v=+p[0]*60+ +p[1]+m;return pad(Math.floor(v/60))+':'+pad(v%60);}
+function uid(){return 'id'+Date.now().toString(36)+Math.random().toString(36).slice(2,4);}
+function toast(msg){var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(function(){el.classList.remove('show');},2500);}
+function showEl(id){document.getElementById(id).classList.remove('hd');}
+function hideEl(id){document.getElementById(id).classList.add('hd');}
+function showPub(id){['s0','s1','s2','succ'].forEach(function(x){document.getElementById(x).classList.add('hd');});document.getElementById(id).classList.remove('hd');}
+
+function showMsg(id, msg, isOk){
+  var el=document.getElementById(id);
+  el.textContent=msg;
+  el.className='adm-msg-bar '+(isOk?'ok':'err');
+  el.style.display='block';
+  setTimeout(function(){el.style.display='none';},4000);
+}
+
+// ── CONFIG ──────────────────────────────
+async function loadCfg(){
+  try{
+    var r=await fetch(WC_GET,{cache:'no-store'});
+    if(r.ok){var d=await r.json();if(d&&d.meetingTypes){cfg=d;updateEndpoints();return;}}
+  }catch(e){console.warn('config n8n indisponível:',e);}
+}
+
+function updateEndpoints(){
+  if(cfg.system){
+    if(cfg.system.webhookVerificar) WV=cfg.system.webhookVerificar;
+    if(cfg.system.webhookAgendar)   WA=cfg.system.webhookAgendar;
   }
 }
-function ok(){
-  var dt=new Date(chosen.datetime),end=am(dt,CFG.meetingDuration);
-  document.getElementById('sb').style.display='none';
-  var ml='';
-  if(meetUrl){
-    var mu=meetUrl;
-    ml='<div class="meet-link-box"><strong>Link da reuniao</strong>'
-      +'<div style="display:flex;align-items:center;gap:8px;margin-top:4px">'
-      +'<span style="flex:1;word-break:break-all;font-size:13px;color:#22367b">'+mu+'</span>'
-      +'<button id="cpbtn" style="flex-shrink:0;padding:6px 14px;border-radius:6px;border:1.5px solid #d3e2f2;background:#fff;color:#22367b;font-weight:700;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif">Copiar</button>'
-      +'</div></div>';
+
+// ── ROUTING ────────────────────────────
+function goAdmin(){
+  hideEl('view-public');showEl('view-admin');
+  document.getElementById('hdr-badge').textContent='Retaguarda';
+  document.getElementById('admin-gear').style.visibility='hidden';
+}
+function goPublic(){
+  hideEl('view-admin');showEl('view-public');
+  document.getElementById('hdr-badge').textContent='CS – '+(cfg.csm.name||'Arthur');
+  document.getElementById('admin-gear').style.visibility='visible';
+  location.hash='';
+}
+
+// ── AUTH ────────────────────────────────
+function checkPw(){
+  var pw=document.getElementById('adm-pw').value;
+  var stored=cfg.system&&cfg.system.adminPw?cfg.system.adminPw:ADMIN_PW;
+  if(pw===stored){
+    hideEl('adm-login');showEl('adm-panel');
+    renderAdminAll();
+  }else{
+    document.getElementById('pw-err').style.display='block';
   }
-  document.getElementById('ct').innerHTML='<div class="success-card card">'
-    +'<div class="success-icon">🎉</div>'
-    +'<h2>Agendamento confirmado!</h2>'
-    +'<p class="sub"><strong>'+es(form.school)+'</strong><br>'+fd(dt)+' - '+ft(dt)+' - '+ft(end)+'<br>Um convite foi enviado para <strong>'+es(form.email)+'</strong></p>'
-    +ml
-    +'<button class="new-btn" onclick="nr()">Fazer novo agendamento</button>'
+}
+
+// ── TABS ────────────────────────────────
+function switchTab(t){
+  ['dados','horarios','tipos','config'].forEach(function(id){
+    document.getElementById('panel-'+id).classList.remove('active');
+    document.getElementById('tab-'+id).classList.remove('active');
+  });
+  document.getElementById('panel-'+t).classList.add('active');
+  document.getElementById('tab-'+t).classList.add('active');
+}
+
+// ── RENDER ADMIN ────────────────────────
+function renderAdminAll(){
+  // Dados
+  document.getElementById('d-name').value    = cfg.csm.name    || '';
+  document.getElementById('d-title').value   = cfg.csm.title   || '';
+  document.getElementById('d-email').value   = cfg.csm.email   || '';
+  document.getElementById('d-ics').value     = cfg.csm.icsUrl  || '';
+  document.getElementById('d-status').value  = cfg.csm.status  || 'active';
+  // header
+  document.getElementById('adm-hdr-sub').textContent = (cfg.csm.name||'Davi') + (cfg.csm.title?' · '+cfg.csm.title:'');
+  var badge = document.getElementById('adm-status-badge');
+  badge.textContent = cfg.csm.status==='inactive'?'● Inativo':'● Ativo';
+  badge.className   = 'adm-status'+(cfg.csm.status==='inactive'?' inactive':'');
+
+  // Config
+  var s = cfg.system||{};
+  document.getElementById('c-wv').value      = s.webhookVerificar||WV;
+  document.getElementById('c-wa').value      = s.webhookAgendar  ||WA;
+  document.getElementById('c-calid').value   = s.calendarId      ||cfg.csm.email||'';
+  document.getElementById('c-pageurl').value = s.pageUrl         ||'';
+  document.getElementById('c-sla').value     = s.slaHours        ||48;
+  document.getElementById('c-pw').value      = s.adminPw         ||ADMIN_PW;
+
+  // Tipos
+  renderTipos();
+  // Horários
+  renderTypeTabsHorarios();
+}
+
+// ── TIPOS DE REUNIÃO ────────────────────
+function renderTipos(){
+  var el=document.getElementById('mt-list');
+  el.innerHTML='';
+  (cfg.meetingTypes||[]).forEach(function(mt,i){
+    var row=document.createElement('div');
+    row.className='mt-row';
+    var durMin=mt.duration||60;
+    var durLabel=durMin>=60?(durMin/60)+'h':'';
+    if(durMin%60!==0||durMin<60)durLabel=durMin+' min';
+    row.innerHTML=
+      '<div class="mt-fields">'
+        +'<div><label>Nome</label><input class="mt-name" data-id="'+mt.id+'" value="'+escH(mt.name)+'" oninput="updateMtPreview(\''+mt.id+'\')" placeholder="Ex: Treinamento"></div>'
+        +'<div><label>Duração (min)</label><input class="mt-dur" data-id="'+mt.id+'" type="number" min="15" max="480" step="15" value="'+durMin+'" oninput="updateMtPreview(\''+mt.id+'\')"></div>'
+        +'<div style="text-align:center;padding-top:20px"><input class="mt-active" data-id="'+mt.id+'" type="checkbox"'+(mt.active?' checked':'')+'></div>'
+        +'<div style="padding-top:20px"><button class="btn-rm" onclick="removeMt(\''+mt.id+'\')">Remover</button></div>'
+      +'</div>'
+      +'<div style="margin-top:10px"><label style="margin-bottom:6px">Descrição <span style=\"font-weight:600;color:#9ca3af\">(aparece na página para ajudar o cliente a escolher)</span></label>'
+        +'<textarea class="mt-desc" data-id="'+mt.id+'" rows="2" placeholder="Ex: Para novos usuários que precisam aprender a usar a plataforma. Duração de 2h com apresentação completa." style="resize:vertical">'+escH(mt.desc||'')+'</textarea></div>'
+      +'<div class="mt-preview" id="mtp-'+mt.id+'">Preview: <strong>'+escH(mt.name)+(durLabel?' ('+durLabel+')':'')+'</strong></div>';
+    el.appendChild(row);
+  });
+}
+
+function updateMtPreview(id){
+  var name=document.querySelector('.mt-name[data-id="'+id+'"]')?.value||'';
+  var dur=+document.querySelector('.mt-dur[data-id="'+id+'"]')?.value||60;
+  var label=dur>=60&&dur%60===0?(dur/60)+'h':dur+' min';
+  var el=document.getElementById('mtp-'+id);
+  if(el)el.innerHTML='Preview: <strong>'+escH(name)+' ('+label+')'+'</strong>';
+}
+
+function addMeetingType(){
+  cfg.meetingTypes.push({ id:uid(), name:'Novo tipo', duration:60, active:true, slots:[] });
+  renderTipos();
+}
+
+function removeMt(id){
+  if(!confirm('Remover este tipo de reunião? Os horários configurados serão perdidos.'))return;
+  cfg.meetingTypes=cfg.meetingTypes.filter(function(x){return x.id!==id;});
+  renderTipos();
+  renderTypeTabsHorarios();
+}
+
+function readTiposFromDom(){
+  cfg.meetingTypes.forEach(function(mt){
+    var nameEl   = document.querySelector('.mt-name[data-id="'+mt.id+'"]');
+    var durEl    = document.querySelector('.mt-dur[data-id="'+mt.id+'"]');
+    var activeEl = document.querySelector('.mt-active[data-id="'+mt.id+'"]');
+    var descEl   = document.querySelector('.mt-desc[data-id="'+mt.id+'"]');
+    if(nameEl)   mt.name     = nameEl.value.trim()||mt.name;
+    if(durEl)    mt.duration = Math.max(15,+durEl.value||60);
+    if(activeEl) mt.active   = activeEl.checked;
+    if(descEl)   mt.desc     = descEl.value.trim();
+  });
+}
+
+async function salvarTipos(){
+  readTiposFromDom();
+  renderTypeTabsHorarios();
+  var ok=await pushConfig();
+  showMsg('msg-tipos', ok?'✅ Tipos salvos com sucesso!':'⚠️ Erro ao salvar.', ok);
+}
+
+// ── HORÁRIOS ────────────────────────────
+function renderTypeTabsHorarios(){
+  var tabs=document.getElementById('type-tabs-horarios');
+  tabs.innerHTML='';
+  var active=cfg.meetingTypes.filter(function(mt){return mt.active;});
+  if(!active.length){
+    document.getElementById('slots-editor').innerHTML='<div style="color:#6b7280;font-size:14px;padding:12px 0">Nenhum tipo ativo. Crie e ative tipos na aba "Tipos de Reunião".</div>';
+    return;
+  }
+  if(!activeTypeTabId||!active.find(function(mt){return mt.id===activeTypeTabId;}))
+    activeTypeTabId=active[0].id;
+
+  active.forEach(function(mt){
+    var btn=document.createElement('button');
+    btn.className='type-tab'+(mt.id===activeTypeTabId?' active':'');
+    var dur=mt.duration;
+    var label=dur>=60&&dur%60===0?(dur/60)+(dur/60===1?' hora':' horas'):dur+' min';
+    btn.textContent=mt.name+' ('+label+')';
+    btn.onclick=function(){activeTypeTabId=mt.id;renderTypeTabsHorarios();};
+    tabs.appendChild(btn);
+  });
+  renderSlotsEditor(activeTypeTabId);
+}
+
+function renderSlotsEditor(mtId){
+  var mt=cfg.meetingTypes.find(function(x){return x.id===mtId;});
+  if(!mt){document.getElementById('slots-editor').innerHTML='';return;}
+
+  var el=document.getElementById('slots-editor');
+  el.innerHTML='<div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:12px">'+escH(mt.name)+'<span style="color:#6b7280;font-weight:600;font-size:12px;margin-left:8px">Duração: '+mt.duration+' min</span></div>';
+
+  var slots=mt.slots||[];
+  slots.forEach(function(slot,i){
+    el.appendChild(buildSlotRow(mtId, slot, i));
+  });
+}
+
+function buildSlotRow(mtId, slot, idx){
+  var div=document.createElement('div');
+  div.className='slot-row';
+  div.dataset.mtid=mtId;
+  div.dataset.idx=idx;
+
+  var sel=document.createElement('select');
+  sel.className='slot-dow';
+  [1,2,3,4,5,6,0].forEach(function(d){
+    var o=document.createElement('option');
+    o.value=d;o.textContent=DOWNAMES[d];
+    if(slot.day===d)o.selected=true;
+    sel.appendChild(o);
+  });
+
+  var inp=document.createElement('input');
+  inp.type='time';inp.className='slot-time';inp.value=slot.time||'09:00';
+
+  var until=document.createElement('span');
+  until.className='until';
+  var mt=cfg.meetingTypes.find(function(x){return x.id===mtId;});
+  var dur=mt?mt.duration:60;
+  var updateUntil=function(){until.textContent='até '+addMin(inp.value,dur);};
+  inp.addEventListener('change',updateUntil);
+  updateUntil();
+
+  var rmBtn=document.createElement('button');
+  rmBtn.className='btn-rm';rmBtn.textContent='Remover';
+  rmBtn.onclick=function(){
+    var mtt=cfg.meetingTypes.find(function(x){return x.id===mtId;});
+    if(mtt)mtt.slots.splice(idx,1);
+    renderSlotsEditor(mtId);
+    renderTypeTabsHorarios();
+  };
+
+  div.appendChild(sel);div.appendChild(inp);div.appendChild(until);div.appendChild(rmBtn);
+  return div;
+}
+
+function addSlotRow(){
+  var mt=cfg.meetingTypes.find(function(x){return x.id===activeTypeTabId;});
+  if(!mt){toast('Selecione um tipo de reunião primeiro.');return;}
+  if(!mt.slots)mt.slots=[];
+  mt.slots.push({day:1,time:'09:00'});
+  renderSlotsEditor(activeTypeTabId);
+  renderTypeTabsHorarios();
+}
+
+function readSlotsFromDom(){
+  var rows=document.querySelectorAll('#slots-editor .slot-row');
+  var mt=cfg.meetingTypes.find(function(x){return x.id===activeTypeTabId;});
+  if(!mt)return;
+  mt.slots=[];
+  rows.forEach(function(row){
+    var dow=+row.querySelector('.slot-dow').value;
+    var time=row.querySelector('.slot-time').value;
+    if(time)mt.slots.push({day:dow,time:time});
+  });
+}
+
+function copiarPara(){
+  readSlotsFromDom();
+  var src=cfg.meetingTypes.find(function(x){return x.id===activeTypeTabId;});
+  if(!src){toast('Nenhum tipo ativo.');return;}
+  var outros=cfg.meetingTypes.filter(function(mt){return mt.id!==activeTypeTabId&&mt.active;});
+  if(!outros.length){toast('Não há outros tipos ativos para copiar.');return;}
+
+  var overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.id='modal-copiar';
+
+  var box=document.createElement('div');
+  box.className='modal-box';
+
+  box.innerHTML=
+    '<div class="modal-title">📋 Copiar horários</div>'
+    +'<div class="modal-sub">Selecione os tipos que receberão os horários de <strong>'+escH(src.name)+'</strong>:</div>'
+    +'<span class="modal-sel-all" id="modal-sel-all-btn">✓ Selecionar todos</span>'
+    +'<div id="modal-check-list"></div>'
+    +'<div class="modal-actions">'
+      +'<button class="btn" id="modal-confirmar-btn">Copiar</button>'
+      +'<button class="back" onclick="fecharModal()">Cancelar</button>'
     +'</div>';
-  if(meetUrl){var mu2=meetUrl;document.getElementById('cpbtn').addEventListener('click',function(){navigator.clipboard.writeText(mu2).then(function(){var b=document.getElementById('cpbtn');if(b){b.textContent='Copiado!';setTimeout(function(){b.textContent='Copiar';},2000);}});});}
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  var list=document.getElementById('modal-check-list');
+  outros.forEach(function(mt){
+    var row=document.createElement('div');
+    row.className='modal-check-row';
+    var cb=document.createElement('input');
+    cb.type='checkbox';cb.id='chk-'+mt.id;cb.value=mt.id;
+    cb.style.cssText='width:auto;cursor:pointer;accent-color:#22367b;flex-shrink:0';
+    var dur=mt.duration;
+    var label=dur>=60&&dur%60===0?(dur/60)+(dur/60===1?' hora':' horas'):dur+' min';
+    var lbl=document.createElement('label');
+    lbl.htmlFor='chk-'+mt.id;
+    lbl.textContent=mt.name+' ('+label+')';
+    row.appendChild(cb);row.appendChild(lbl);
+    row.addEventListener('click',function(e){
+      if(e.target!==cb)cb.checked=!cb.checked;
+      row.classList.toggle('selected',cb.checked);
+    });
+    list.appendChild(row);
+  });
+
+  var allSel=false;
+  document.getElementById('modal-sel-all-btn').addEventListener('click',function(){
+    allSel=!allSel;
+    list.querySelectorAll('input[type=checkbox]').forEach(function(c){c.checked=allSel;});
+    list.querySelectorAll('.modal-check-row').forEach(function(r){r.classList.toggle('selected',allSel);});
+    this.textContent=allSel?'✕ Desmarcar todos':'✓ Selecionar todos';
+  });
+
+  document.getElementById('modal-confirmar-btn').addEventListener('click',function(){
+    var selecionados=Array.from(list.querySelectorAll('input[type=checkbox]:checked')).map(function(c){return c.value;});
+    if(!selecionados.length){toast('Selecione ao menos um tipo.');return;}
+    selecionados.forEach(function(id){
+      var mt=cfg.meetingTypes.find(function(x){return x.id===id;});
+      if(mt)mt.slots=JSON.parse(JSON.stringify(src.slots));
+    });
+    fecharModal();
+    toast('Horários copiados para '+selecionados.length+' tipo(s).');
+  });
+
+  overlay.addEventListener('click',function(e){if(e.target===overlay)fecharModal();});
 }
-function nr(){step=1;form={school:'',contact:'',email:'',phone:'',guests:''};chosen=null;meetUrl='';document.getElementById('sb').style.display='';rst();s1();}
-rst();s1();
+
+function fecharModal(){
+  var m=document.getElementById('modal-copiar');
+  if(m)m.parentNode.removeChild(m);
+}
+
+async function salvarHorarios(){
+  readSlotsFromDom();
+  var ok=await pushConfig();
+  showMsg('msg-horarios', ok?'✅ Horários salvos com sucesso!':'⚠️ Erro ao salvar.', ok);
+}
+
+// ── SALVAR DADOS ────────────────────────
+async function salvarDados(){
+  cfg.csm.name    = document.getElementById('d-name').value.trim();
+  cfg.csm.title   = document.getElementById('d-title').value.trim();
+  cfg.csm.email   = document.getElementById('d-email').value.trim();
+  cfg.csm.icsUrl  = document.getElementById('d-ics').value.trim();
+  cfg.csm.status  = document.getElementById('d-status').value;
+  var ok=await pushConfig();
+  if(ok){
+    document.getElementById('adm-hdr-sub').textContent=(cfg.csm.name||'Arthur')+(cfg.csm.title?' · '+cfg.csm.title:'');
+    var badge=document.getElementById('adm-status-badge');
+    badge.textContent=cfg.csm.status==='inactive'?'● Inativo':'● Ativo';
+    badge.className='adm-status'+(cfg.csm.status==='inactive'?' inactive':'');
+    document.getElementById('hdr-badge').textContent='CS – '+(cfg.csm.name||'Arthur');
+    updatePublicHero();
+  }
+  showMsg('msg-dados', ok?'✅ Dados salvos com sucesso!':'⚠️ Erro ao salvar.', ok);
+}
+
+// ── SALVAR CONFIG ───────────────────────
+async function salvarConfig(){
+  cfg.system.webhookVerificar = document.getElementById('c-wv').value.trim();
+  cfg.system.webhookAgendar   = document.getElementById('c-wa').value.trim();
+  cfg.system.calendarId       = document.getElementById('c-calid').value.trim();
+  cfg.system.pageUrl          = document.getElementById('c-pageurl').value.trim();
+  cfg.system.slaHours         = Math.max(0,+document.getElementById('c-sla').value||48);
+  cfg.system.adminPw          = document.getElementById('c-pw').value||ADMIN_PW;
+  updateEndpoints();
+  var ok=await pushConfig();
+  showMsg('msg-config', ok?'✅ Configurações salvas!':'⚠️ Erro ao salvar.', ok);
+}
+
+// ── PUSH PARA N8N ───────────────────────
+async function pushConfig(){
+  try{
+    var r=await fetch(WC_SAVE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(cfg)});
+    return r.ok;
+  }catch(e){console.error('pushConfig erro:',e);return false;}
+}
+
+// ── PÚBLICO: HERO ───────────────────────
+function updatePublicHero(){
+  var csm=cfg.csm||{};
+  document.getElementById('hero-name').textContent  = csm.name  || 'Arthur';
+  document.getElementById('hero-title').textContent = csm.title || '';
+  document.getElementById('hero-title').style.display = csm.title?'block':'none';
+  document.getElementById('hdr-badge').textContent = 'CS – '+(csm.name||'Arthur');
+}
+
+// ── PÚBLICO: TIPOS DE REUNIÃO ───────────
+function renderPublicTypes(){
+  var list=document.getElementById('type-list');
+  list.innerHTML='';
+  var active=(cfg.meetingTypes||[]).filter(function(mt){return mt.active;});
+  if(!active.length){showEl('no-types');return;}
+  hideEl('no-types');
+  active.forEach(function(mt){
+    var dur=mt.duration||60;
+    var label=dur>=60&&dur%60===0?(dur/60)+(dur/60===1?' hora':' horas'):dur+' min';
+    var el=document.createElement('div');
+    el.className='tc';
+    el.dataset.id=mt.id;
+    el.innerHTML='<div style="flex:1">'
+      +'<div style="display:flex;align-items:center;gap:8px"><span class="tn">'+escH(mt.name)+'</span><span class="td">🕐 '+label+'</span></div>'
+      +(mt.desc?'<div class="tc-desc">'+escH(mt.desc)+'</div>':'')
+      +'</div>';
+    el.addEventListener('click',function(){
+      document.querySelectorAll('#type-list .tc').forEach(function(x){x.classList.remove('sel');});
+      el.classList.add('sel');
+      selTypeId  = mt.id;
+      selTypeName= mt.name;
+      selTypeDur = mt.duration||60;
+      document.getElementById('btn0').disabled=false;
+    });
+    list.appendChild(el);
+  });
+}
+
+// ── PÚBLICO: DISPONIBILIDADE ─────────────
+async function loadAvailability(){
+  document.getElementById('cal-wrap').innerHTML='<div class="loading">⏳ Verificando disponibilidade...</div>';
+  hideEl('tw');selDate='';selTime='';document.getElementById('btn1').disabled=true;
+  availDays={};
+
+  var mt=cfg.meetingTypes.find(function(x){return x.id===selTypeId;});
+  if(!mt){renderCal();return;}
+
+  var slaHours = (cfg.system&&cfg.system.slaHours!==undefined)?cfg.system.slaHours:48;
+  var wv = (cfg.system&&cfg.system.webhookVerificar)||WV;
+
+  var today=new Date();today.setHours(0,0,0,0);
+
+  for(var i=1;i<=30;i++){
+    var d=new Date(today);d.setDate(d.getDate()+i);
+    var dow=d.getDay();
+    var iso=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+    var daySlots=(mt.slots||[]).filter(function(s){return s.day===dow;});
+    if(!daySlots.length)continue;
+    try{
+      var r=await fetch(wv,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        date:        iso,
+        slots:       daySlots,
+        duration:    mt.duration,
+        slaHours:    slaHours,
+        meetingType: mt.name
+      })});
+      if(r.ok){
+        var resp=await r.json();
+        if(resp.slots&&resp.slots.length)
+          availDays[iso]=resp.slots.map(function(s){return s.time;});
+      }
+    }catch(e){console.error('Erro verificação',iso,e);}
+  }
+  renderCal();
+}
+
+function renderCal(){
+  document.getElementById('cal-lbl').textContent=MONTHS[cm].charAt(0).toUpperCase()+MONTHS[cm].slice(1)+' '+cy;
+  var first=new Date(cy,cm,1).getDay(), days=new Date(cy,cm+1,0).getDate();
+  var grid=document.createElement('div');grid.className='cal';
+  DS.forEach(function(d){var h=document.createElement('div');h.style.cssText='text-align:center;font-size:11px;font-weight:700;color:#6b7280;padding:4px 0';h.textContent=d;grid.appendChild(h);});
+  for(var i=0;i<first;i++)grid.appendChild(document.createElement('div'));
+  for(var d=1;d<=days;d++){
+    var iso=cy+'-'+pad(cm+1)+'-'+pad(d);
+    var avail=!!availDays[iso];
+    var isSel=iso===selDate;
+    var cell=document.createElement('div');
+    cell.className='cc'+(isSel?' sl':avail?' av':' em');
+    cell.textContent=d;
+    if(avail)(function(i2){cell.addEventListener('click',function(){pickDate(i2);});})(iso);
+    grid.appendChild(cell);
+  }
+  var w=document.getElementById('cal-wrap');w.innerHTML='';w.appendChild(grid);
+}
+
+function pickDate(iso){
+  selDate=iso;selTime='';document.getElementById('btn1').disabled=true;
+  renderCal();
+  var times=availDays[iso]||[];
+  showEl('tw');
+  var dt=new Date(iso+'T12:00:00');
+  document.getElementById('tl').textContent='Horários – '+DL[dt.getDay()]+', '+dt.getDate()+' de '+MONTHS[dt.getMonth()];
+  var tc=document.getElementById('times');tc.innerHTML='';
+  if(!times.length){tc.innerHTML='<span style="color:#dc2626;font-size:13px">Nenhum horário disponível. Escolha outra data.</span>';return;}
+  times.forEach(function(t){
+    var b=document.createElement('div');b.className='ts';b.dataset.time=t;
+    b.innerHTML=t+' <span style="font-size:11px;opacity:.7">até '+addMin(t,selTypeDur)+'</span>';
+    b.addEventListener('click',function(){document.querySelectorAll('.ts').forEach(function(x){x.classList.remove('sel');});this.classList.add('sel');selTime=this.dataset.time;document.getElementById('btn1').disabled=false;});
+    tc.appendChild(b);
+  });
+}
+
+// ── CONFIRMAR ───────────────────────────
+async function confirmar(){
+  if(_submitting)return;
+  var s=document.getElementById('fi-school').value.trim();
+  var c=document.getElementById('fi-contact').value.trim();
+  var e=document.getElementById('fi-email').value.trim();
+  var p=document.getElementById('fi-phone').value.trim();
+  var g=document.getElementById('fi-guests').value.trim();
+  var er=document.getElementById('ferr');
+  if(!s||!c||!e||!p){er.style.display='block';return;}
+  er.style.display='none';
+  _submitting=true;
+  var btn=document.getElementById('btn2');btn.disabled=true;btn.textContent='Aguarde...';
+
+  var sys=cfg.system||{};
+  var payload={
+    date:         selDate,
+    time:         selTime,
+    meetingType:  selTypeName,
+    duration:     selTypeDur,
+    school:       s,
+    contact:      c,
+    email:        e,
+    phone:        p,
+    guests:       g,
+    calendarId:   sys.calendarId   || cfg.csm.email,
+    meetingTitle: sys.meetingTitle  || 'Reunião ClipEscola',
+    pageUrl:      sys.pageUrl       || '',
+    csmTitle:     cfg.csm.title    || ''
+  };
+
+  var wa=(sys.webhookAgendar)||WA;
+
+  try{
+    var r=await fetch(wa,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var resp=await r.json().catch(function(){return{};});
+    // Trata: HTTP não-2xx, success===false explícito, ou body vazio num erro
+    if(!r.ok||!resp||resp.success===false||resp.status==='error'){
+      er.textContent=resp.error||'Não foi possível confirmar o agendamento. Tente novamente ou entre em contato.';
+      er.style.display='block';_submitting=false;btn.disabled=false;btn.textContent='Confirmar agendamento';return;
+    }
+    showPub('succ');
+    var ml=resp.meetLink||null;
+    var dt=new Date(selDate+'T12:00:00');
+    var meetEl=ml
+      ?"<div class='meet-box'><div class='meet-ttl'>🎥 Link da reunião</div><div class='meet-row'><span class='meet-link' id='meet-url'>"+ml+"</span><button class='copy-btn' id='copy-btn'>Copiar</button></div></div>"
+      :"<div style='margin-top:10px;font-size:12px;color:#6b7280'>O link do Meet será enviado por e-mail.</div>";
+    document.getElementById('sd').innerHTML=
+      '<div style="margin-bottom:4px"><strong>'+escH(selTypeName)+'</strong> com <strong>'+escH(cfg.csm.name||'Davi')+'</strong></div>'
+      +'<div style="color:#6b7280">📅 '+DL[dt.getDay()]+', '+dt.getDate()+' de '+MONTHS[dt.getMonth()]+' de '+cy+'</div>'
+      +'<div style="color:#6b7280">🕐 '+selTime+' – '+addMin(selTime,selTypeDur)+' <strong style="color:#854d0e">· Horário de Brasília (GMT-3)</strong></div>'
+      +meetEl;
+    var cb=document.getElementById('copy-btn');
+    if(cb&&ml)cb.addEventListener('click',function(){navigator.clipboard.writeText(ml).then(function(){cb.textContent='Copiado!';setTimeout(function(){cb.textContent='Copiar';},2000);});});
+  }catch(err){
+    er.textContent='Erro de conexão. Tente novamente.';er.style.display='block';
+    _submitting=false;btn.disabled=false;btn.textContent='Confirmar agendamento';
+  }
+}
+
+// ── UTIL ────────────────────────────────
+function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── INIT ────────────────────────────────
+document.addEventListener('DOMContentLoaded',async function(){
+  // Sempre carrega config do n8n (fonte de verdade)
+  await loadCfg();
+
+  updatePublicHero();
+  renderPublicTypes();
+
+  document.getElementById('btn0').addEventListener('click',function(){
+    if(this.disabled)return;
+    showPub('s1');
+    cy=new Date().getFullYear();cm=new Date().getMonth();
+    // atualiza hero meta com duração do tipo selecionado
+    var dur=selTypeDur;
+    var label=dur>=60&&dur%60===0?(dur/60)+(dur/60===1?' hora':' horas'):dur+' min';
+    document.getElementById('hero-meta').textContent='🕐 '+label+' · 🌎 Horário de Brasília';
+    loadAvailability();
+  });
+
+  document.getElementById('back1').addEventListener('click',function(){showPub('s0');selDate='';selTime='';});
+  document.getElementById('btn1').addEventListener('click',function(){
+    if(this.disabled)return;
+    showPub('s2');
+    var dt=new Date(selDate+'T12:00:00');
+    document.getElementById('ibar').textContent='📅 '+DL[dt.getDay()]+', '+dt.getDate()+' de '+MONTHS[dt.getMonth()]+' de '+cy+' às '+selTime+' · '+selTypeName+' (Horário de Brasília)';
+  });
+  document.getElementById('btn2').addEventListener('click',confirmar);
+  document.getElementById('back2').addEventListener('click',function(){showPub('s1');});
+  document.getElementById('prev-m').addEventListener('click',function(){cm--;if(cm<0){cm=11;cy--;}availDays={};loadAvailability();});
+  document.getElementById('next-m').addEventListener('click',function(){cm++;if(cm>11){cm=0;cy++;}availDays={};loadAvailability();});
+  document.getElementById('succ-btn').addEventListener('click',function(){location.reload();});
+  document.getElementById('adm-pw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw();});
+  if(location.hash==='#admin')goAdmin();
+});
 </script>
 </body>
 </html>
